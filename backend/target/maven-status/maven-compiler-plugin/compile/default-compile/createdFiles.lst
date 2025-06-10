@@ -1,0 +1,5 @@
+com/lockermat/config/AppConfig.class
+com/lockermat/util/Identifiable.class
+com/lockermat/Application.class
+com/lockermat/config/web/WebExceptionHandler.class
+com/lockermat/config/web/WebSecurityConfig.class
