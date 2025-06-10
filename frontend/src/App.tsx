@@ -1,0 +1,34 @@
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeView } from 'Store/actions';
+import { RootState } from 'Store/types';
+import Navbar from 'Components/Navbar/Navbar';
+import Welcome from 'Components/Welcome/Welcome';
+import PointsContainer from 'Containers/PointsContainer';
+import MyPackagesContainer from 'Containers/MyPackagesContainer';
+import { Views } from 'Enums/Views';
+
+const App = () => {
+  const dispatch = useDispatch();
+  const currentView = useSelector((state: RootState) => state.app.view);
+
+  const renderView = () => {
+    switch (currentView) {
+      case Views.WELCOME:
+        return <Welcome />;
+      case Views.POINTS:
+        return <PointsContainer />;
+      case Views.PACKAGES:
+        return <MyPackagesContainer />;
+      default:
+        return <Welcome />;
+    }
+  };
+
+  return (
+    <div>
+      <Navbar onNavigate={(view: typeof Views) => dispatch(changeView(view))} />
+      <main>{renderView()}</main>
+    </div>
+  );
+};
