@@ -1,9 +1,11 @@
+syntax = "docker/dockerfile:1.4"
 FROM maven:3.9.8-eclipse-temurin-21-alpine AS builder
 WORKDIR /opt/lockermat
 COPY pom.xml mvnw .mvn/ ./
-RUN mvn dependency:go-offline -B
+# cache Maven dependencies between builds (requires BuildKit-enabled Docker)
+RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -B
 COPY src ./src
-RUN mvn package -DskipTests -B
+RUN --mount=type=cache,target=/root/.m2 mvn package -DskipTests -B
 
 FROM amazoncorretto:21-alpine-jdk
 WORKDIR /opt/lockermat
