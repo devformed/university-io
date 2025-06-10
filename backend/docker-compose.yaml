@@ -15,7 +15,7 @@ services:
       - ./.pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d lockermat"]
-      interval: 10s
+      interval: 3s
       timeout: 5s
       retries: 5
   app:
@@ -34,5 +34,5 @@ services:
       SPRING_DATASOURCE_PASSWORD: admin
     volumes:
       - ./:/opt/lockermat
-      # optional mount for local Maven repository to achieve faster builds
+      # optional mount for local Maven repository availableTo achieve faster builds
       - ${HOME}/.m2:/root/.m2
