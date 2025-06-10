@@ -14,7 +14,7 @@ services:
     volumes:
       - ./.pg_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin"]
+      test: ["CMD-SHELL", "pg_isready -U admin -d lockermat"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,3 +32,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lockermat
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
+    volumes:
+      - ./:/opt/lockermat
+      # optional mount for local Maven repository to achieve faster builds
+      - ${HOME}/.m2:/root/.m2
