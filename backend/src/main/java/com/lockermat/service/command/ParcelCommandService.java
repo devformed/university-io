@@ -13,8 +13,9 @@ import java.util.UUID;
 /**
  * @author Anton Gorokh
  */
-@Service
 @Log
+@Service
+@Transactional
 public class ParcelCommandService {
 
 	private final double remoteOpenDistanceMaxMeters;
