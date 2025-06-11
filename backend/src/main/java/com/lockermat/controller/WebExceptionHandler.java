@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 
 /**
@@ -37,7 +38,7 @@ public class WebExceptionHandler extends ResponseEntityExceptionHandler implemen
 		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 	}
 
-	@ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class, UnsupportedOperationException.class})
+	@ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class, UnsupportedOperationException.class, NoSuchElementException.class})
 	protected ResponseEntity<Object> handleBadRequest(Exception ex, WebRequest request) {
 		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}

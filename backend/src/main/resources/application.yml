@@ -21,5 +21,6 @@ spring:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: com.lockermat.model.UnderscorePhysicalNamingStrategy
+      dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
       ddl-auto: validate
   sql.init.platform: postgres

@@ -23,7 +23,7 @@ public class LockermatController {
 	private final LockermatQueryService queryService;
 
 	@PostMapping
-	public Page<List<LockermatEntry>> find(@RequestBody(required = false) @Nullable Page<LockermatFilter> filters) {
+	public Page<List<LockermatEntry>> find(@RequestBody Page<LockermatFilter> filters) {
 		return queryService.find(filters);
 	}
 }

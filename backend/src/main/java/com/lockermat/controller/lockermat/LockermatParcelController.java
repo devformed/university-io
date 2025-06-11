@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 /**
  * @author Anton Gorokh
  */
@@ -21,7 +23,7 @@ public class LockermatParcelController {
 	private final ParcelCommandService commandService;
 
 	@PutMapping(path = "/open-remotely", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void openRemotely(@RequestBody Position position, @RequestParam Long parcelId) {
+	public void openRemotely(@RequestBody Position position, @RequestParam UUID parcelId) {
 		commandService.openRemotely(parcelId, position.latitude(), position.longitude());
 	}
 }

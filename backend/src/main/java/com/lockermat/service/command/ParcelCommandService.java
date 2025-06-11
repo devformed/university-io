@@ -1,15 +1,20 @@
 package com.lockermat.service.command;
 
-import com.lockermat.model.repository.ParcelRepository;
-import com.lockermat.model.repository.ReservationRepository;
+import com.lockermat.model.repository.lockermat.ParcelRepository;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
+/**
+ * @author Anton Gorokh
+ */
 @Service
+@Log
 public class ParcelCommandService {
 
 	private final double remoteOpenDistanceMaxMeters;
@@ -22,7 +27,7 @@ public class ParcelCommandService {
 	}
 
 	@Transactional
-	public void openRemotely(Long parcelId, BigDecimal latitude, BigDecimal longitude) {
+	public void openRemotely(UUID parcelId, BigDecimal latitude, BigDecimal longitude) {
 		if (!parcelRepository.isWithinDistance(parcelId, longitude.doubleValue(), latitude.doubleValue(), remoteOpenDistanceMaxMeters)) {
 			doThrowNotCloseToParcel();
 		}

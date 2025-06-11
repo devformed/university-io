@@ -2,44 +2,43 @@ package com.lockermat.service.command;
 
 import com.lockermat.model.dto.Position;
 import com.lockermat.model.dto.lockermat.parcel.reservation.ReservationReserveRequest;
-import com.lockermat.model.dto.reservation.ReservationResponse;
-import com.lockermat.model.repository.ParcelRepository;
+import com.lockermat.model.entity.lockermat.ParcelEntity;
+import com.lockermat.model.entity.lockermat.ReservationEntity;
+import com.lockermat.model.repository.lockermat.ReservationRepository;
 import com.lockermat.service.query.ParcelQueryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * @author Anton Gorokh
+ */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ReservationCommandService {
 
-	private final long minWindowBetweenReservationsSeconds;
-	private final ParcelRepository parcelRepo;
+	private final ReservationRepository reservationRepo;
 	private final ParcelQueryService parcelQuery;
 	private final ParcelCommandService parcelCommand;
 
-	@Autowired
-	public ReservationCommandService(@Value("${com.lockermat.parcel.reservation.min-window-bw-reservations-sec:#{60 * 60 * 24 * 7}}") long minWindowBetweenReservationsSeconds,
-									 ParcelRepository parcelRepo, ParcelQueryService parcelQuery, ParcelCommandService parcelCommand) {
-		this.minWindowBetweenReservationsSeconds = minWindowBetweenReservationsSeconds;
-		this.parcelRepo = parcelRepo;
-		this.parcelQuery = parcelQuery;
-		this.parcelCommand = parcelCommand;
+	public UUID reserve(ReservationReserveRequest request) {
+		Optional<ParcelEntity> parcel = parcelQuery.findAnyAvailable(request.lockermatId(), request.size(), request.from(), request.to());
+		ReservationEntity reservation = new ReservationEntity(UUID.randomUUID(), parcel.orElseThrow(), request.from(), request.to());
+		return reservationRepo.save(reservation).getId();
 	}
 
-	@Transactional
-	public Long reserve(ReservationReserveRequest request) {
-		// find any parcel within the lockermat of given size that is available for reservation (which means that the window between planned and existing reservations is at least minWindowBetweenReservationsSeconds)
-		// then return reservationId
-		return null;
+	public void cancel(UUID reservationId) {
+		var entity = reservationRepo.getReferenceById(reservationId);
+		reservationRepo.delete(entity);
 	}
 
-	public void cancel(Long reservationId) {
-		// mark the given reservation as cancelled
-	}
-
-	public void openRemotely(Position position, Long reservationId) {
-		// same as parcelCommand.openRemotely
+	public void openRemotely(Position position, UUID reservationId) {
+		var reservation = reservationRepo.getReferenceById(reservationId);
+		var parcelId = reservation.getParcel().getId();
+		parcelCommand.openRemotely(parcelId, position.latitude(), position.longitude());
 	}
 }

@@ -1,11 +1,12 @@
 package com.lockermat.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
+
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Anton Gorokh
@@ -13,20 +14,30 @@ import lombok.SneakyThrows;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Utils {
 
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	// syntax sugar methods
 
-	public static <T> T fromJson(String json, TypeReference<T> ref) throws JsonProcessingException {
-		return OBJECT_MAPPER.readValue(json, ref);
+	public static <T, R> R map(@Nullable T value, Function<T, R> mapping) {
+		return value == null ? null : mapping.apply(value);
 	}
 
-	@SneakyThrows
-	public static <T> T fromJsonSneaky(String json, TypeReference<T> ref) {
-		return OBJECT_MAPPER.readValue(json, ref);
+	public static <T, R1, R2> R2 map(@Nullable T value, Function<T, R1> mapping1, Function<R1, R2> mapping2) {
+		return value == null ? null : map(mapping1.apply(value), mapping2);
+	}
+
+	public static <T, R1, R2, R3> R3 map(@Nullable T value, Function<T, R1> mapping1, Function<R1, R2> mapping2, Function<R2, R3> mapping3) {
+		return value == null ? null : map(mapping1.apply(value), mapping2, mapping3);
 	}
 
 	public static <T> T nn(T value) {
-		if (value != null) return value;
-		throw new NullPointerException();
+		return Objects.requireNonNull(value);
+	}
+
+	public static <T> T nn(T value, T orElse) {
+		return Objects.requireNonNullElse(value, orElse);
+	}
+
+	public static <T> T nn(T value, Supplier<? extends T> orElseGet) {
+		return Objects.requireNonNullElseGet(value, orElseGet);
 	}
 }
 
