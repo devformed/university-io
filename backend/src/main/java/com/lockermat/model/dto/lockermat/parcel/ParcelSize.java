@@ -1,4 +1,4 @@
-package com.lockermat.model.dto.lockermat;
+package com.lockermat.model.dto.lockermat.parcel;
 
 /**
  * @author Anton Gorokh

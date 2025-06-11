@@ -1,4 +1,4 @@
-package com.lockermat.config.web;
+package com.lockermat.controller;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

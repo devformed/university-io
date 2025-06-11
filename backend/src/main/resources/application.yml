@@ -18,6 +18,8 @@ spring:
       query.fail_on_pagination_over_collection_fetch: 'true'
 #      show_sql: 'true'
     hibernate:
-      naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: com.lockermat.model.UnderscorePhysicalNamingStrategy
       ddl-auto: validate
   sql.init.platform: postgres
