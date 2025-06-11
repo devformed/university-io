@@ -3,12 +3,14 @@ import {
     SET_INPUT_VALUES,
     SET_LOCKERMAT_POINTS,
     CHANGE_VIEW,
+    SHOW_POPUP,
  } from 'Store/consts';
 import {
     LockerMatPoint,
     InputValues,
 } from 'Store/types';
 import { Views } from 'Enums/Views';
+import { PopupContentType } from 'Enums/PopupContentType';
 
 export interface SetInputValuesAction {
   type: typeof SET_INPUT_VALUES;
@@ -29,9 +31,15 @@ export interface ChangeViewAction {
   data: Views;
 }
 
+export interface ShowPopupAction {
+  type: typeof SHOW_POPUP;
+  data: PopupContentType;
+}
+
 export type AppActionTypes =
   | GetLockerMatPointsAction
   | SetInputValuesAction
   | SetLockerMatPointsAction
-  | ChangeViewAction;
+  | ChangeViewAction
+  | ShowPopupAction;
 

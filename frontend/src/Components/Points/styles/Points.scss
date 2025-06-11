@@ -1,0 +1,9 @@
+.points {
+  padding: 2rem;
+
+  &__separator {
+    margin: 2rem 0;
+    height: 1px;
+    background-color: #ccc;
+  }
+}
