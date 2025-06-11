@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeView } from 'Store/actions';
+import { changeView } from 'Store/actions/actions';
 import { RootState } from 'Store/types';
 import Navbar from 'Components/Navbar/Navbar';
 import Welcome from 'Components/Welcome/Welcome';
@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div>
-      <Navbar onNavigate={(view: typeof Views) => dispatch(changeView(view))} />
+      <Navbar onNavigate={(view: Views) => dispatch(changeView(view))} />
       <main>{renderView()}</main>
     </div>
   );
