@@ -16,7 +16,7 @@ public interface ParcelRepository extends BaseRepository<ParcelEntity> {
 	boolean isWithinDistance(@Param("parcelId") UUID parcelId, @Param("lng") double lng, @Param("lat") double lat, @Param("meters") double meters);
 
 	@Query(value = QUERY_FIND_ANY_AVAILABLE, nativeQuery = true)
-	Optional<ParcelEntity> findAnyAvailable(UUID lockermatId, ParcelSize size, Instant reservationFrom, Instant reservationTo, long minWindowBetweenReservationsSeconds);
+	Optional<ParcelEntity> findAnyAvailable(@Param("lockermatId") UUID lockermatId, @Param("size") String size, @Param("from") Instant reservationFrom, @Param("to") Instant reservationTo, long minWindowBetweenReservationsSeconds);
 
 	String QUERY_IS_WITHIN_DISTANCE = """
 			SELECT ST_DWithin(
@@ -30,6 +30,15 @@ public interface ParcelRepository extends BaseRepository<ParcelEntity> {
 			""";
 
 	String QUERY_FIND_ANY_AVAILABLE = """
-			TODO
+			SELECT *
+			FROM parcel_ p
+			WHERE p.size_ = :size
+			and p.lockermat_id_ = :lockermatId
+			and 0 = (
+				select count(1) from reservation_ r
+				where r.parcel_id_ = p.id_
+				and r.to_ >= now()
+			)
+			LIMIT 1
 			""";
 }

@@ -27,7 +27,7 @@ public class ReservationCommandService {
 
 	public UUID reserve(ReservationReserveRequest request) {
 		Optional<ParcelEntity> parcel = parcelQuery.findAnyAvailable(request.lockermatId(), request.size(), request.from(), request.to());
-		ReservationEntity reservation = new ReservationEntity(UUID.randomUUID(), parcel.orElseThrow(), request.from(), request.to());
+		ReservationEntity reservation = new ReservationEntity(null, parcel.orElseThrow(), request.from(), request.to());
 		return reservationRepo.save(reservation).getId();
 	}
 

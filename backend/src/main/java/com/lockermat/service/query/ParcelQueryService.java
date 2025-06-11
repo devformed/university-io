@@ -12,6 +12,8 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.lockermat.util.Utils.map;
+
 /**
  * @author Anton Gorokh
  */
@@ -29,6 +31,6 @@ public class ParcelQueryService {
 	}
 
 	public Optional<ParcelEntity> findAnyAvailable(UUID lockermatId, ParcelSize size, Instant reservationFrom, Instant reservationTo) {
-		return parcelRepository.findAnyAvailable(lockermatId, size, reservationFrom, reservationTo, minWindowBetweenReservationsSeconds);
+		return parcelRepository.findAnyAvailable(lockermatId, map(size, Enum::name), reservationFrom, reservationTo, minWindowBetweenReservationsSeconds);
 	}
 }
