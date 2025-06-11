@@ -1,0 +1,28 @@
+.locker-mat-list {
+  &__item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #007bff;
+    border-radius: 0.25rem;
+    background-color: #f0f8ff;
+  }
+
+  &__actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}

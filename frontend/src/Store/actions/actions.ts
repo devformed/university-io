@@ -3,9 +3,11 @@ import {
   SET_INPUT_VALUES,
   SET_LOCKERMAT_POINTS,
   CHANGE_VIEW,
+  SHOW_POPUP,
 } from 'Store/consts';
 import { Views } from 'Enums/Views';
 import { LockerMatPoint, InputValues  } from 'Store/types';
+import { PopupContentType } from 'Enums/PopupContentType';
 
 
 export const getLockerMatPoints = (): { type: typeof GET_LOCKERMAT_POINTS } => ({
@@ -27,3 +29,7 @@ export const changeView = (data: Views) => ({
   data
 });
 
+export const showPopup = (data: PopupContentType) => ({
+  type: SHOW_POPUP,
+  data
+});

@@ -2,15 +2,18 @@ import {
   SET_LOCKERMAT_POINTS,
   SET_INPUT_VALUES,
   CHANGE_VIEW,
+  SHOW_POPUP,
 } from 'Store/consts';
 import { Views } from 'Enums/Views';
 import { AppActionTypes } from 'Store/actions/actionTypes';
 import { LockerMatPoint, InputValues } from 'Store/types';
+import { PopupContentType } from 'Enums/PopupContentType';
 
 export interface AppState {
   view: Views;
   inputValues: InputValues;
   lockerMatList: LockerMatPoint[];
+  popupContent: PopupContentType | null;
 }
 
 const initialInputValues: InputValues = { 
@@ -24,8 +27,9 @@ const initialInputValues: InputValues = {
 
 const initialState: AppState = {
   view: Views.WELCOME,
-  inputValues: {},
-  lockerMatList: []
+  inputValues: initialInputValues,
+  lockerMatList: [],
+  popupContent: null,
 };
 
 const appReducer = (state: AppState = initialState, action: AppActionTypes) => {
@@ -48,6 +52,11 @@ const appReducer = (state: AppState = initialState, action: AppActionTypes) => {
         ...state,
         view: action.data,
         };
+    case SHOW_POPUP:
+      return {
+        ...state,
+        popupContent: action.data,
+      };
     default:
       return state;
   }
