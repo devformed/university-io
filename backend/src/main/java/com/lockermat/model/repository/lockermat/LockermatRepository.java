@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
-public interface LockermatRepository extends BaseRepository<LockermatEntity> {
+public interface LockermatRepository extends BaseRepository<LockermatEntity>, LockermatCustomRepository {
 
 	@Query(value = QUERY_FIND_AVAILABLE, nativeQuery = true)
 	List<LockermatEntity> findAvailable(@Param("lng") Double lng, @Param("lat") Double lat, @Param("availableFrom") Instant availableFrom, @Param("availableTo") Instant availableTo, @Param("sizes") Set<String> sizes, @Param("offset") int offset, @Param("limit") int limit);

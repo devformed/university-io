@@ -4,15 +4,23 @@ import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import static com.lockermat.util.Collections.mapSet;
 
 /**
  * @author Anton Gorokh
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Utils {
+
+	public static <T> Set<T> ids(Collection<? extends Identifiable<T>> items) {
+		return mapSet(items, Identifiable::getId);
+	}
 
 	// syntax sugar methods
 

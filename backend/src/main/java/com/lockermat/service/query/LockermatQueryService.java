@@ -15,9 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.lockermat.util.Collections.mapSet;
+import static com.lockermat.util.Utils.ids;
 import static com.lockermat.util.Utils.map;
 import static com.lockermat.util.Utils.nn;
 
@@ -45,6 +48,8 @@ public class LockermatQueryService {
         Set<String> sizes = mapSet(filter.sizes(), ParcelSize::name);
 
         List<LockermatEntity> lockermats = lockermatRepo.findAvailable(lng, lat, filter.availableFrom(), filter.availableTo(), sizes, offset, limit);
-        return new Page<>(pageNum, pageSize, LockermatMapper.INSTANCE.toEntries(lockermats));
+        Map<UUID, Set<ParcelSize>> parcelSizesByLockermatIds = lockermatRepo.findParcelSizesByLockermatIds(ids(lockermats));
+
+        return new Page<>(pageNum, pageSize, LockermatMapper.INSTANCE.toEntries(lockermats, parcelSizesByLockermatIds));
     }
 }
