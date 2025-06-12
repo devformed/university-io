@@ -26,7 +26,8 @@
       "Components/*": ["Components/*"],
       "Containers/*": ["Containers/*"],
       "Enums/*": ["Enums/*"],
-      "reduxCore/*": ["reduxCore/*"]
+      "reduxCore/*": ["reduxCore/*"],
+      "Assets/*": ["Assets/*"]
     }
   },
   "include": [
