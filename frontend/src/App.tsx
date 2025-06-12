@@ -6,6 +6,7 @@ import Navbar from 'Components/Navbar/Navbar';
 import Welcome from 'Components/Welcome/Welcome';
 import PointsContainer from 'Containers/PointsContainer';
 import MyPackagesContainer from 'Containers/MyPackagesContainer'; // todo: Implement MyPackagesContainer
+import PopupContainer from 'Containers/PopupContainer';
 import { Views } from 'Enums/Views';
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
     <div>
       <Navbar onNavigate={(view: Views) => dispatch(changeView(view))} />
       <main>{renderView()}</main>
+      <PopupContainer />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { PopupContentType } from 'Enums/PopupContentType';
 import ReservePopupContent from 'Components/PopupContent/ReservePopupContent/ReservePopupContent';
 import OpenRemotelyPopupContent from 'Components/PopupContent/OpenRemotelyPopupContent/OpenRemotelyPopupContent';
 import ConfirmPopupContent from 'Components/PopupContent/ConfirmPopupContent/ConfirmPopupContent';
+import FailedPopupContent from 'Components/PopupContent/FailedPopupContent/FailedPopupContent';
 import { hidePopup, setSelectedLockerMatParcel } from 'Store/actions/actions';
 
 import './styles/PopupContainer.scss';
@@ -29,6 +30,8 @@ const PopupContainer = () => {
         return selectedLockerMatParcel ? <OpenRemotelyPopupContent parcel={selectedLockerMatParcel} onClose={handleClose} /> : null;
       case PopupContentType.Confirm:
         return <ConfirmPopupContent onClose={handleClose} />;
+      case PopupContentType.Failed:
+        return <FailedPopupContent onClose={handleClose} />;
       default:
         return null;
     }

@@ -1,0 +1,43 @@
+.open-remotely-popup {
+  padding: 20px;
+  background-color: #e6f0ff;
+  border-radius: 8px;
+  text-align: center;
+
+  &__title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+
+  &__address {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  &__sizes {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  &__button:hover {
+    background-color: #0056b3;
+  }
+}

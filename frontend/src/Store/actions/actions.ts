@@ -7,6 +7,7 @@ import {
   HIDE_POPUP,
   SET_SELECTED_LOCKERMAT_PARCEL,
   RESERVE_LOCKERMAT_PARCEL,
+  OPEN_REMOTELY_LOCKERMAT_PARCEL,
 } from 'Store/consts';
 import { 
   SetInputValuesAction, 
@@ -16,6 +17,7 @@ import {
   ShowPopupAction, 
   SetSelectedLockerMatParcelAction ,
   ReserveLockerMatParcelAction,
+  OpenRemotelyLockerMatParcelAction,
 } from 'Store/actions/actionTypes';
 
 
@@ -54,5 +56,10 @@ export const reserveLockerMatParcel = (data: ReserveLockerMatParcelAction['data'
 
 export const setSelectedLockerMatParcel = (data: SetSelectedLockerMatParcelAction['data']) => ({
   type: SET_SELECTED_LOCKERMAT_PARCEL,
+  data,
+});
+
+export const reserveAndOpenLockerMatParcel = (data: OpenRemotelyLockerMatParcelAction['data']) => ({
+  type: OPEN_REMOTELY_LOCKERMAT_PARCEL,
   data,
 });

@@ -7,7 +7,9 @@ import {
     HIDE_POPUP,
     SET_SELECTED_LOCKERMAT_PARCEL,
     RESERVE_LOCKERMAT_PARCEL,
+    OPEN_REMOTELY_LOCKERMAT_PARCEL,
  } from 'Store/consts';
+ 
 import {
     LockerMatPoint,
     InputValues,
@@ -58,6 +60,18 @@ export interface ReserveLockerMatParcelAction {
   };
 }
 
+export interface OpenRemotelyLockerMatParcelAction {
+  type: typeof OPEN_REMOTELY_LOCKERMAT_PARCEL;
+  data: {
+    lockermatId: string;
+    size: string;
+    from: string;
+    to: string;
+    latitude: number;
+    longitude: number;
+  };
+}
+
 
 export type AppActionTypes =
   | GetLockerMatPointsAction
@@ -67,5 +81,6 @@ export type AppActionTypes =
   | ShowPopupAction
   | HidePopupAction
   | SetSelectedLockerMatParcelAction
-  | ReserveLockerMatParcelAction;
+  | ReserveLockerMatParcelAction
+  | OpenRemotelyLockerMatParcelAction;
 
