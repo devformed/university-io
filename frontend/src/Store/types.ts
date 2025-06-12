@@ -10,10 +10,12 @@ export interface RootState {
 }
 
 export interface LockerMatPoint {
-  id: number;
+  id: string;
   address: string;
-  longitude: number;
-  latitude: number;
+  position: {
+    longitude: number;
+    latitude: number;
+  }
   availableSizes: string[];
 }
 

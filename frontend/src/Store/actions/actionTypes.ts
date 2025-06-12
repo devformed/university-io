@@ -6,6 +6,7 @@ import {
     SHOW_POPUP,
     HIDE_POPUP,
     SET_SELECTED_LOCKERMAT_PARCEL,
+    RESERVE_LOCKERMAT_PARCEL,
  } from 'Store/consts';
 import {
     LockerMatPoint,
@@ -47,6 +48,16 @@ export interface SetSelectedLockerMatParcelAction {
   data: LockerMatPoint | null;
 }
 
+export interface ReserveLockerMatParcelAction {
+  type: typeof RESERVE_LOCKERMAT_PARCEL;
+  data: {
+    lockermatId: string;
+    size: string;
+    from: string;
+    to: string;
+  };
+}
+
 
 export type AppActionTypes =
   | GetLockerMatPointsAction
@@ -55,5 +66,6 @@ export type AppActionTypes =
   | ChangeViewAction
   | ShowPopupAction
   | HidePopupAction
-  | SetSelectedLockerMatParcelAction;
+  | SetSelectedLockerMatParcelAction
+  | ReserveLockerMatParcelAction;
 

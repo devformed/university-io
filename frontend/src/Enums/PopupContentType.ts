@@ -1,4 +1,5 @@
 export enum PopupContentType {
   Reserve = 'RESERVE',
-  OpenRemotely = 'OPEN_REMOTELY'
+  OpenRemotely = 'OPEN_REMOTELY',
+  Confirm = 'CONFIRM',
 }

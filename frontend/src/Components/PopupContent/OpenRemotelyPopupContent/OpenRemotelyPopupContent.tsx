@@ -1,6 +1,7 @@
 import React from 'react';
 import { OpenRemotelyPopupContentPropsType } from './types/OpenRemotelyPopupContentPropsType';
 
+
 const OpenRemotelyPopupContent = ({ parcel, onClose }: OpenRemotelyPopupContentPropsType) => {
  return (
     <div>

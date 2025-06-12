@@ -6,6 +6,7 @@ import {
   SHOW_POPUP,
   HIDE_POPUP,
   SET_SELECTED_LOCKERMAT_PARCEL,
+  RESERVE_LOCKERMAT_PARCEL,
 } from 'Store/consts';
 import { 
   SetInputValuesAction, 
@@ -13,7 +14,8 @@ import {
   GetLockerMatPointsAction, 
   ChangeViewAction, 
   ShowPopupAction, 
-  SetSelectedLockerMatParcelAction 
+  SetSelectedLockerMatParcelAction ,
+  ReserveLockerMatParcelAction,
 } from 'Store/actions/actionTypes';
 
 
@@ -43,6 +45,11 @@ export const showPopup = (data: ShowPopupAction['data']) => ({
 
 export const hidePopup = () => ({
   type: HIDE_POPUP,
+});
+
+export const reserveLockerMatParcel = (data: ReserveLockerMatParcelAction['data']) => ({
+  type: RESERVE_LOCKERMAT_PARCEL,
+  data,
 });
 
 export const setSelectedLockerMatParcel = (data: SetSelectedLockerMatParcelAction['data']) => ({

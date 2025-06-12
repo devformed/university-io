@@ -24,7 +24,7 @@ function* getLockerMatPoints(action: GetLockerMatPointsAction): Generator<any, v
       }
     };
 
-    const data: LockerMatPoint[] = yield call(apiFetch, 'lockermats', 'POST', requestBody);
+    const { data }: { data: LockerMatPoint[] } = yield call(apiFetch, 'lockermats', 'POST', requestBody);
     yield put(setLockerMatPoints(data));
   } catch (error) {
     console.error('Fetch error:', error);
