@@ -4,6 +4,8 @@ import {
     SET_LOCKERMAT_POINTS,
     CHANGE_VIEW,
     SHOW_POPUP,
+    HIDE_POPUP,
+    SET_SELECTED_LOCKERMAT_PARCEL,
  } from 'Store/consts';
 import {
     LockerMatPoint,
@@ -36,10 +38,22 @@ export interface ShowPopupAction {
   data: PopupContentType;
 }
 
+export interface HidePopupAction {
+  type: typeof HIDE_POPUP;
+}
+
+export interface SetSelectedLockerMatParcelAction {
+  type: typeof SET_SELECTED_LOCKERMAT_PARCEL;
+  data: LockerMatPoint | null;
+}
+
+
 export type AppActionTypes =
   | GetLockerMatPointsAction
   | SetInputValuesAction
   | SetLockerMatPointsAction
   | ChangeViewAction
-  | ShowPopupAction;
+  | ShowPopupAction
+  | HidePopupAction
+  | SetSelectedLockerMatParcelAction;
 
