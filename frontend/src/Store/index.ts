@@ -8,7 +8,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
-    app: appReducer as any// Type assertion to avoid type issues with Redux Toolkit
+    // @ts-ignore to fix in future
+    app: appReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

@@ -6,6 +6,7 @@ export interface RootState {
     view: Views;
     inputValues: Record<string, string>;
     lockerMatList: LockerMatPoint[];
+    userReservations: UserReservation[];
   };
 }
 
@@ -26,4 +27,11 @@ export interface InputValues {
   latitude?: number;
   longitude?: number;
   sizes?: LockermatParcelSizes[];
+}
+
+export interface UserReservation {
+  id: string;
+  parcelId: string;
+  from: string;
+  to: string;
 }

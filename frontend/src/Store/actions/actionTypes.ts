@@ -8,11 +8,14 @@ import {
     SET_SELECTED_LOCKERMAT_PARCEL,
     RESERVE_LOCKERMAT_PARCEL,
     OPEN_REMOTELY_LOCKERMAT_PARCEL,
+    GET_ALL_USER_RESERVATIONS,
+    SET_ALL_USER_RESERVATIONS,
  } from 'Store/consts';
- 
+
 import {
     LockerMatPoint,
     InputValues,
+    UserReservation,
 } from 'Store/types';
 import { Views } from 'Enums/Views';
 import { PopupContentType } from 'Enums/PopupContentType';
@@ -72,6 +75,14 @@ export interface OpenRemotelyLockerMatParcelAction {
   };
 }
 
+export interface GetAllUserReservationsAction {
+  type: typeof GET_ALL_USER_RESERVATIONS;
+}
+
+export interface SetAllUserReservationsAction {
+  type: typeof SET_ALL_USER_RESERVATIONS;
+  data: UserReservation[];
+}
 
 export type AppActionTypes =
   | GetLockerMatPointsAction
@@ -82,5 +93,7 @@ export type AppActionTypes =
   | HidePopupAction
   | SetSelectedLockerMatParcelAction
   | ReserveLockerMatParcelAction
-  | OpenRemotelyLockerMatParcelAction;
+  | OpenRemotelyLockerMatParcelAction
+  | GetAllUserReservationsAction
+  | SetAllUserReservationsAction;
 

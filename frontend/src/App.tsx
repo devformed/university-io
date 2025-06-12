@@ -5,7 +5,7 @@ import { RootState } from 'Store/types';
 import Navbar from 'Components/Navbar/Navbar';
 import Welcome from 'Components/Welcome/Welcome';
 import PointsContainer from 'Containers/PointsContainer';
-import MyPackagesContainer from 'Containers/MyPackagesContainer'; // todo: Implement MyPackagesContainer
+import MyPackagesContainer from 'Containers/MyPackagesContainer';
 import PopupContainer from 'Containers/PopupContainer';
 import { Views } from 'Enums/Views';
 

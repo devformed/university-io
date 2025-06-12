@@ -8,7 +8,10 @@ import {
   SET_SELECTED_LOCKERMAT_PARCEL,
   RESERVE_LOCKERMAT_PARCEL,
   OPEN_REMOTELY_LOCKERMAT_PARCEL,
+  GET_ALL_USER_RESERVATIONS,
+  SET_ALL_USER_RESERVATIONS,
 } from 'Store/consts';
+
 import { 
   SetInputValuesAction, 
   SetLockerMatPointsAction, 
@@ -18,6 +21,8 @@ import {
   SetSelectedLockerMatParcelAction ,
   ReserveLockerMatParcelAction,
   OpenRemotelyLockerMatParcelAction,
+  GetAllUserReservationsAction,
+  SetAllUserReservationsAction,
 } from 'Store/actions/actionTypes';
 
 
@@ -62,4 +67,13 @@ export const setSelectedLockerMatParcel = (data: SetSelectedLockerMatParcelActio
 export const reserveAndOpenLockerMatParcel = (data: OpenRemotelyLockerMatParcelAction['data']) => ({
   type: OPEN_REMOTELY_LOCKERMAT_PARCEL,
   data,
+});
+
+export const getAllUserReservations = ():  { type: GetAllUserReservationsAction['type'] } => ({
+  type: GET_ALL_USER_RESERVATIONS,
+});
+
+export const setAllUserReservations = (data: SetAllUserReservationsAction['data']) => ({
+  type: SET_ALL_USER_RESERVATIONS,
+  data
 });

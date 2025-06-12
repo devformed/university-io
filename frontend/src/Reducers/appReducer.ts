@@ -5,10 +5,16 @@ import {
     SHOW_POPUP,
     HIDE_POPUP,
     SET_SELECTED_LOCKERMAT_PARCEL,
+    SET_ALL_USER_RESERVATIONS,
 } from 'Store/consts';
+
+import {
+    LockerMatPoint,
+    InputValues,
+    UserReservation,
+} from 'Store/types';
 import { Views } from 'Enums/Views';
 import { AppActionTypes } from 'Store/actions/actionTypes';
-import { LockerMatPoint, InputValues } from 'Store/types';
 import { PopupContentType } from 'Enums/PopupContentType';
 
 export interface AppState {
@@ -17,13 +23,14 @@ export interface AppState {
   lockerMatList: LockerMatPoint[];
   popupContent: PopupContentType | null;
   selectedLockerMatParcel: LockerMatPoint | null;
+  userReservations: UserReservation[];
 }
 
 const initialInputValues: InputValues = { 
   fulltext: '',
   availableFrom: '',
   availableTo: '',
-  latitude: 52.379189,
+  latitude: 52.379189, // todo: mock data
   longitude: 4.899431,
   sizes: [],
 }
@@ -34,9 +41,10 @@ const initialState: AppState = {
   lockerMatList: [],
   popupContent: null,
   selectedLockerMatParcel: null,
+  userReservations: [],
 };
 
-const appReducer = (state: AppState = initialState, action: AppActionTypes) => {
+const appReducer = (state: AppState = initialState, action: AppActionTypes): AppState => {
   switch (action.type) {
     case SET_INPUT_VALUES:
       return {
@@ -70,6 +78,11 @@ const appReducer = (state: AppState = initialState, action: AppActionTypes) => {
         return {
             ...state,
             selectedLockerMatParcel: action.data,
+        };
+    case SET_ALL_USER_RESERVATIONS:
+        return {
+            ...state,
+            userReservations: action.data,
         };
     default:
       return state;
