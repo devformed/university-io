@@ -11,6 +11,7 @@ import {
     GET_ALL_USER_RESERVATIONS,
     SET_ALL_USER_RESERVATIONS,
     CANCEL_USER_RESERVATION,
+    DELETE_USER_RESERVATION,
  } from 'Store/consts';
 
 import {
@@ -92,6 +93,11 @@ export interface CancelUserReservationAction {
   };
 }
 
+export interface DeleteUserReservationAction {
+  type: typeof DELETE_USER_RESERVATION;
+  data: string; // reservationId
+}
+
 
 export type AppActionTypes =
   | GetLockerMatPointsAction
@@ -105,5 +111,6 @@ export type AppActionTypes =
   | OpenRemotelyLockerMatParcelAction
   | GetAllUserReservationsAction
   | SetAllUserReservationsAction
-  | CancelUserReservationAction;
+  | CancelUserReservationAction
+  | DeleteUserReservationAction;
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { UserReservation } from 'Store/types';
 import { MyPackagesPropsTypes } from './types/MyPackagesPropsTypes';
 import { cancelUserReservation } from 'Store/actions/actions';
 

@@ -1,7 +1,10 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { CANCEL_USER_RESERVATION } from 'Store/consts';
 import { CancelUserReservationAction } from 'Store/actions/actionTypes';
-import { showPopup } from 'Store/actions/actions';
+import {
+  showPopup,
+  deleteUserReservation,
+} from 'Store/actions/actions';
 import { PopupContentType } from 'Enums/PopupContentType';
 import { apiFetch } from 'Store/helpers/apiFetch';
 
@@ -18,7 +21,8 @@ function* cancelUserReservation(action: CancelUserReservationAction): Generator<
       null
     );
 
-    console.log(`${loggerPrefix} Reservation canceled successfully.`);
+    console.log(`${loggerPrefix} Reservation canceled successfully. Deleting reservation from store.`);
+    yield put(deleteUserReservation(action.data.reservationId));
     yield put(showPopup(PopupContentType.Confirm));
   } catch (error) {
     console.error(`${loggerPrefix} Error: ${error}`);

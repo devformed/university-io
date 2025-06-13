@@ -11,6 +11,7 @@ import {
   GET_ALL_USER_RESERVATIONS,
   SET_ALL_USER_RESERVATIONS,
   CANCEL_USER_RESERVATION,
+  DELETE_USER_RESERVATION,
 } from 'Store/consts';
 
 import { 
@@ -25,6 +26,7 @@ import {
   GetAllUserReservationsAction,
   SetAllUserReservationsAction,
   CancelUserReservationAction,
+  DeleteUserReservationAction,
 } from 'Store/actions/actionTypes';
 
 
@@ -82,5 +84,10 @@ export const setAllUserReservations = (data: SetAllUserReservationsAction['data'
 
 export const cancelUserReservation = (data: CancelUserReservationAction['data']) => ({
   type: CANCEL_USER_RESERVATION,
+  data,
+});
+
+export const deleteUserReservation = (data: DeleteUserReservationAction['data']) => ({
+  type: DELETE_USER_RESERVATION,
   data,
 });

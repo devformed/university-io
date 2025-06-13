@@ -16,7 +16,7 @@ export const apiFetch = async (
   }
 
   const response = await fetch(`http://localhost:8080/${endpoint}`, options);
-debugger;
+
   if (!response.ok) {
     throw new Error(`API fetch failed: ${response.status}`);
   }

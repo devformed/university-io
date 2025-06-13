@@ -6,6 +6,7 @@ import {
     HIDE_POPUP,
     SET_SELECTED_LOCKERMAT_PARCEL,
     SET_ALL_USER_RESERVATIONS,
+    DELETE_USER_RESERVATION,
 } from 'Store/consts';
 
 import {
@@ -83,6 +84,13 @@ const appReducer = (state: AppState = initialState, action: AppActionTypes): App
         return {
             ...state,
             userReservations: action.data,
+        };
+    case DELETE_USER_RESERVATION:
+        return {
+            ...state,
+            userReservations: state.userReservations.filter(
+              (res) => res.id !== action.data
+            )
         };
     default:
       return state;
