@@ -2,42 +2,97 @@
   padding: 20px;
   background-color: #e6f0ff;
   border-radius: 8px;
-  text-align: center;
+  color: #333;
 
   &__title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #007bff;
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+    margin-top: 5px
   }
 
   &__address {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 1rem;
+  }
+
+  &__label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    margin-top: 1rem;
+  }
+
+  &__value {
+    font-weight: bold;
   }
 
   &__sizes {
     margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
   }
 
-  &__buttons {
+  &__options {
     display: flex;
-    justify-content: space-around;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+
+    input {
+      margin: 0 3px;
+    }
+  }
+
+  &__datetime {
+    margin-bottom: 20px;
+  }
+
+  &__input--datetime {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
   }
 
   &__button {
     background-color: #007bff;
-    color: #fff;
+    color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 10px 15px;
+    margin-top: 20px;
     border-radius: 4px;
     cursor: pointer;
-  }
 
-  &__button:hover {
-    background-color: #0056b3;
+    &--cancel {
+      background-color: #6c757d;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
   }
 }

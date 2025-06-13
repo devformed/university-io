@@ -17,7 +17,7 @@ export interface LockerMatPoint {
     longitude: number;
     latitude: number;
   }
-  availableSizes: string[];
+  sizes: string[];
 }
 
 export interface InputValues {

@@ -20,8 +20,8 @@ function* getLockerMatPoints(action: GetLockerMatPointsAction): Generator<any, v
       pageSize: 20,
       data: {
         fulltext: inputValues.fulltext || '',
-        availableFrom: inputValues.availableFrom,
-        availableTo: inputValues.availableTo,
+        availableFrom: inputValues.availableFrom ? new Date(inputValues.availableFrom).toISOString() : '',
+        availableTo: inputValues.availableTo ? new Date(inputValues.availableTo).toISOString() : '',
         position: {
           latitude: Number(inputValues.latitude),
           longitude: Number(inputValues.longitude)

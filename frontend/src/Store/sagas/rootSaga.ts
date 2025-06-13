@@ -3,6 +3,7 @@ import getLockerMatPointsSaga from 'Store/sagas/getLockerMatPointsSaga';
 import reserveLockerMatParcelSaga from 'Store/sagas/reserveLockerMatParcelSaga';
 import openRemotelyParcelSaga from 'Store/sagas/openRemotelyParcelSaga';
 import getAllUserReservationsSaga from 'Store/sagas/getAllUserReservationsSaga';
+import cancelUserReservationSaga from 'Store/sagas/cancelUserReservationSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -10,5 +11,6 @@ export default function* rootSaga() {
     reserveLockerMatParcelSaga(),
     openRemotelyParcelSaga(),
     getAllUserReservationsSaga(),
+    cancelUserReservationSaga(),
   ]);
 }

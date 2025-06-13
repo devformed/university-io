@@ -5,6 +5,10 @@
   padding: 10px 30px;
   background-color: #f4f4f4;
   border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  background: #ebd8b9;
+background: radial-gradient(circle, rgba(235, 216, 185, 1) 0%, rgba(240, 248, 255, 1) 100%);
 }
 
 .navbar__left {
@@ -40,6 +44,8 @@
 }
 
 .navbar__username {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 }

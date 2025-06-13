@@ -1,0 +1,33 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+//   font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  background-color: #f0f8ff;
+
+//   background: #F0F8FF;
+// background: linear-gradient(90deg, rgba(240, 248, 255, 1) 0%, rgba(240, 248, 255, 1) 64%, rgba(92, 224, 250, 1) 100%);
+background: #aee1ee;
+background: radial-gradient(circle, rgba(174, 225, 238, 1) 0%, rgba(240, 248, 255, 1) 100%);
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+}

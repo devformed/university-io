@@ -10,6 +10,7 @@ import {
     OPEN_REMOTELY_LOCKERMAT_PARCEL,
     GET_ALL_USER_RESERVATIONS,
     SET_ALL_USER_RESERVATIONS,
+    CANCEL_USER_RESERVATION,
  } from 'Store/consts';
 
 import {
@@ -84,6 +85,14 @@ export interface SetAllUserReservationsAction {
   data: UserReservation[];
 }
 
+export interface CancelUserReservationAction {
+  type: typeof CANCEL_USER_RESERVATION;
+  data: {
+    reservationId: string;
+  };
+}
+
+
 export type AppActionTypes =
   | GetLockerMatPointsAction
   | SetInputValuesAction
@@ -95,5 +104,6 @@ export type AppActionTypes =
   | ReserveLockerMatParcelAction
   | OpenRemotelyLockerMatParcelAction
   | GetAllUserReservationsAction
-  | SetAllUserReservationsAction;
+  | SetAllUserReservationsAction
+  | CancelUserReservationAction;
 

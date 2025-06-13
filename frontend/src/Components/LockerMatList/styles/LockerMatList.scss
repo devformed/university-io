@@ -25,4 +25,9 @@
       background-color: #0056b3;
     }
   }
+
+  &__address-value,
+  &__sizes-value {
+    font-weight: bold;
+  }
 }

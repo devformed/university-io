@@ -9,6 +9,8 @@ import MyPackagesContainer from 'Containers/MyPackagesContainer';
 import PopupContainer from 'Containers/PopupContainer';
 import { Views } from 'Enums/Views';
 
+import './App.scss';
+
 const App = () => {
   const dispatch = useDispatch();
   const currentView = useSelector((state: RootState) => state.app.view);
@@ -27,7 +29,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className='app'>
       <Navbar onNavigate={(view: Views) => dispatch(changeView(view))} />
       <main>{renderView()}</main>
       <PopupContainer />

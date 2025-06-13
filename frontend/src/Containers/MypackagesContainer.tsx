@@ -10,7 +10,7 @@ const MyPackagesContainer = () => {
 
   useEffect(() => {
     dispatch(getAllUserReservations());
-  }, []);
+  }, [reservations.length]);
 
   return <MyPackages reservations={reservations} />;
 };

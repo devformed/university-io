@@ -10,6 +10,7 @@ import {
   OPEN_REMOTELY_LOCKERMAT_PARCEL,
   GET_ALL_USER_RESERVATIONS,
   SET_ALL_USER_RESERVATIONS,
+  CANCEL_USER_RESERVATION,
 } from 'Store/consts';
 
 import { 
@@ -23,6 +24,7 @@ import {
   OpenRemotelyLockerMatParcelAction,
   GetAllUserReservationsAction,
   SetAllUserReservationsAction,
+  CancelUserReservationAction,
 } from 'Store/actions/actionTypes';
 
 
@@ -76,4 +78,9 @@ export const getAllUserReservations = ():  { type: GetAllUserReservationsAction[
 export const setAllUserReservations = (data: SetAllUserReservationsAction['data']) => ({
   type: SET_ALL_USER_RESERVATIONS,
   data
+});
+
+export const cancelUserReservation = (data: CancelUserReservationAction['data']) => ({
+  type: CANCEL_USER_RESERVATION,
+  data,
 });

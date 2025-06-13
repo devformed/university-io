@@ -12,5 +12,31 @@
     border-radius: 6px;
     margin-bottom: 10px;
     background: #f9f9f9;
+    position: relative;
+  }
+
+  &__label {
+    font-weight: 600;
+    margin-right: 5px;
+  }
+
+  &__value {
+    font-weight: bold;
+  }
+
+  &__button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #c82333;
+    }
   }
 }

@@ -10,15 +10,17 @@ const loggerPrefix = '[OpenRemotelyParcelSaga]';
 function* openRemotelyParcel(action: OpenRemotelyLockerMatParcelAction): Generator<any, void, any> {
   try {
     console.log(`${loggerPrefix} start. Fetching for reservationId.`);
+
+    const { data } = action;
     const reservationId: string = yield call(
       apiFetch,
       'lockermats/parcels/reservations/reserve',
       'PUT',
       {
-        lockermatId: action.data.lockermatId,
-        size: action.data.size,
-        from: action.data.from,
-        to: action.data.to,
+        lockermatId: data.lockermatId,
+        size: data.size,
+      from: new Date(data.from).toISOString(),
+      to: new Date(data.to).toISOString(),
       }
     );
     console.log(`${loggerPrefix} reservationId obtained. Making request to open remotely.`);

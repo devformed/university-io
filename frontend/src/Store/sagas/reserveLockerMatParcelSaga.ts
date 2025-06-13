@@ -11,7 +11,16 @@ const loggerPrefix = '[ReserveLockerMatParcelSaga]';
 function* reserveLockerMatParcel(action: ReserveLockerMatParcelAction): Generator<any, void, any> {
   try {
     console.log(`${loggerPrefix} start. Making reservation.`);
-    yield call(apiFetch, 'lockermats/parcels/reservations/reserve', 'PUT', action.data);
+    const { data } = action;
+
+    const requestBody = {
+      lockermatId: data.lockermatId,
+      size: data.size,
+      from: new Date(data.from).toISOString(),
+      to: new Date(data.to).toISOString(),
+    }
+
+    yield call(apiFetch, 'lockermats/parcels/reservations/reserve', 'PUT', requestBody);
     console.log(`${loggerPrefix} reservation succeed. Showing popup with confirmation.`);
     yield put({ type: SHOW_POPUP, data: PopupContentType.Confirm });
   } catch (error) {
