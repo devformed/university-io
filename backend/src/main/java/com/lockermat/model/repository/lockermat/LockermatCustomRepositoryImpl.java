@@ -1,7 +1,7 @@
 package com.lockermat.model.repository.lockermat;
 
 import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
-import com.lockermat.model.entity.AbstractEntity_;
+import com.lockermat.model.entity.base.AbstractEntity_;
 import com.lockermat.model.entity.lockermat.ParcelEntity;
 import com.lockermat.model.entity.lockermat.ParcelEntity_;
 import jakarta.persistence.EntityManager;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +27,7 @@ public class LockermatCustomRepositoryImpl implements LockermatCustomRepository 
 	private final EntityManager em;
 
 	@Override
-	public Map<UUID, Set<ParcelSize>> findParcelSizesByLockermatIds(Collection<UUID> lockermatIds) {
+	public Map<Long, Set<ParcelSize>> findParcelSizesByLockermatIds(Collection<Long> lockermatIds) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tuple> query = cb.createTupleQuery();
 		Root<ParcelEntity> parcelRoot = query.from(ParcelEntity.class);
@@ -41,6 +40,6 @@ public class LockermatCustomRepositoryImpl implements LockermatCustomRepository 
 
 		return em.createQuery(query)
 				.getResultStream()
-				.collect(Collectors.groupingBy(tuple -> tuple.get(0, UUID.class), Collectors.mapping(tuple -> tuple.get(1, ParcelSize.class), Collectors.toSet())));
+				.collect(Collectors.groupingBy(tuple -> tuple.get(0, Long.class), Collectors.mapping(tuple -> tuple.get(1, ParcelSize.class), Collectors.toSet())));
 	}
 }

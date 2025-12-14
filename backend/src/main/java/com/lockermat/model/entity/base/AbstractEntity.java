@@ -1,4 +1,4 @@
-package com.lockermat.model.entity;
+package com.lockermat.model.entity.base;
 
 import com.lockermat.util.Identifiable;
 import jakarta.persistence.GeneratedValue;
@@ -11,8 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 /**
  * @author Anton Gorokh
  */
@@ -21,9 +19,10 @@ import java.util.UUID;
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractEntity implements Identifiable<UUID> {
+public abstract class AbstractEntity implements Identifiable<Long> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	@SequencePerTableGeneratorType
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
 }

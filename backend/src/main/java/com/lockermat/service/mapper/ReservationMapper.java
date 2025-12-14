@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.Collection;
 import java.util.List;
 
-import static com.lockermat.util.Collections.mapList;
+import static com.lockermat.util.Collections2.mapList;
 
 /**
  * @author Anton Gorokh

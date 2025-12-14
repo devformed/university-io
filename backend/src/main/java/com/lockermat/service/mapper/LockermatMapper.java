@@ -10,9 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
-import static com.lockermat.util.Collections.mapList;
+import static com.lockermat.util.Collections2.mapList;
 
 /**
  * @author Anton Gorokh
@@ -24,7 +23,7 @@ public interface LockermatMapper {
 
 	LockermatEntry toEntry(LockermatEntity entity, Set<ParcelSize> sizes);
 
-	default List<LockermatEntry> toEntries(Collection<LockermatEntity> entities, Map<UUID, Set<ParcelSize>> parcelSizesByLockermatIds) {
+	default List<LockermatEntry> toEntries(Collection<LockermatEntity> entities, Map<Long, Set<ParcelSize>> parcelSizesByLockermatIds) {
 		return mapList(entities, o -> toEntry(o, parcelSizesByLockermatIds.get(o.getId())));
 	}
 }

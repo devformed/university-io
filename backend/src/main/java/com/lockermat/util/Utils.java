@@ -4,13 +4,11 @@ import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.lockermat.util.Collections.mapSet;
+import static com.lockermat.util.Optionull.optionull;
 
 /**
  * @author Anton Gorokh
@@ -18,23 +16,7 @@ import static com.lockermat.util.Collections.mapSet;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Utils {
 
-	public static <T> Set<T> ids(Collection<? extends Identifiable<T>> items) {
-		return mapSet(items, Identifiable::getId);
-	}
-
 	// syntax sugar methods
-
-	public static <T, R> R map(@Nullable T value, Function<T, R> mapping) {
-		return value == null ? null : mapping.apply(value);
-	}
-
-	public static <T, R1, R2> R2 map(@Nullable T value, Function<T, R1> mapping1, Function<R1, R2> mapping2) {
-		return value == null ? null : map(mapping1.apply(value), mapping2);
-	}
-
-	public static <T, R1, R2, R3> R3 map(@Nullable T value, Function<T, R1> mapping1, Function<R1, R2> mapping2, Function<R2, R3> mapping3) {
-		return value == null ? null : map(mapping1.apply(value), mapping2, mapping3);
-	}
 
 	public static <T> T nn(T value) {
 		return Objects.requireNonNull(value);
@@ -46,6 +28,14 @@ public final class Utils {
 
 	public static <T> T nn(T value, Supplier<? extends T> orElseGet) {
 		return Objects.requireNonNullElseGet(value, orElseGet);
+	}
+
+	public static <T, R> R opt(@Nullable T value, Function<T, R> mapping) {
+		return optionull(value).opt(mapping);
+	}
+
+	public static <T extends Exception> T thenThrow(Supplier<T> exception) throws T {
+		throw exception.get();
 	}
 }
 

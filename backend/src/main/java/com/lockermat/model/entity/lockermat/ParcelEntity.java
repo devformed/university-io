@@ -1,17 +1,19 @@
 package com.lockermat.model.entity.lockermat;
 
 import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
-import com.lockermat.model.entity.AbstractEntity;
-import com.lockermat.util.Identifiable;
-import jakarta.persistence.*;
-
+import com.lockermat.model.entity.base.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Entity
 @Table
@@ -28,7 +30,7 @@ public class ParcelEntity extends AbstractEntity {
     private ParcelSize size;
 
     @Builder
-    public ParcelEntity(UUID id, LockermatEntity lockermat, ParcelSize size) {
+    public ParcelEntity(Long id, LockermatEntity lockermat, ParcelSize size) {
         super(id);
         this.lockermat = lockermat;
         this.size = size;

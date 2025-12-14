@@ -2,7 +2,7 @@ package com.lockermat.model.entity.lockermat;
 
 import com.lockermat.model.PersistenceUtils;
 import com.lockermat.model.dto.Position;
-import com.lockermat.model.entity.AbstractEntity;
+import com.lockermat.model.entity.base.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,10 +16,9 @@ import org.hibernate.type.SqlTypes;
 import org.locationtech.jts.geom.Point;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Entity
-@Table(name = "lockermat")
+@Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -33,7 +32,7 @@ public class LockermatEntity extends AbstractEntity {
     private Point location;
 
     @Builder
-    public LockermatEntity(UUID id, String address, Position position) {
+    public LockermatEntity(Long id, String address, Position position) {
         super(id);
         this.address = address;
         setPosition(position);

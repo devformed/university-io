@@ -1,15 +1,16 @@
--- Fixture data for integration tests
-TRUNCATE reservation_ CASCADE;
-TRUNCATE parcel_ CASCADE;
-TRUNCATE lockermat_ CASCADE;
+truncate reservation_ cascade;
+truncate parcel_ cascade;
+truncate lockermat_ cascade;
 
-INSERT INTO lockermat_(id_, address_, location_) VALUES
-  ('00000000-0000-0000-0000-000000000001', 'A St', ST_GeomFromText('POINT(10 20)',4326)),
-  ('00000000-0000-0000-0000-000000000002', 'B St', ST_GeomFromText('POINT(30 40)',4326));
+insert into lockermat_ (address_, location_)
+values ('a street', st_geomfromtext('point(10 20)', 4326)),
+       ('b street', st_geomfromtext('point(30 40)', 4326));
 
-INSERT INTO parcel_(id_, lockermat_id_, size_) VALUES
-  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'S'),
-  ('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000002', 'M');
+insert into parcel_ (lockermat_id_, size_)
+select id_, size_
+from lockermat_ l
+         cross join lateral (unnest(array['S', 'M', 'L'])) size_;
 
-INSERT INTO reservation_(id_, parcel_id_, from_, to_) VALUES
-  ('20000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', '2023-01-01 00:00:00', '2023-01-02 00:00:00');
+insert into reservation (parcel_id_, from_, to_)
+select id_, now() - interval '1' day, now()
+from parcel_ p;

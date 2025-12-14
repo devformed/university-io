@@ -1,7 +1,7 @@
 package com.lockermat.controller.lockermat;
 
 import com.lockermat.model.dto.Position;
-import com.lockermat.service.command.ParcelCommandService;
+import com.lockermat.service.ParcelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 /**
  * @author Anton Gorokh
@@ -20,10 +18,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LockermatParcelController {
 
-	private final ParcelCommandService commandService;
+	private final ParcelService service;
 
 	@PutMapping(path = "/open-remotely", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void openRemotely(@RequestBody Position position, @RequestParam UUID parcelId) {
-		commandService.openRemotely(parcelId, position.latitude(), position.longitude());
+	public void openRemotely(@RequestBody Position position, @RequestParam Long parcelId) {
+		service.openRemotely(parcelId, position.latitude(), position.longitude());
 	}
 }

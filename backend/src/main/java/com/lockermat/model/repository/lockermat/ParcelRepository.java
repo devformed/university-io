@@ -1,44 +1,43 @@
 package com.lockermat.model.repository.lockermat;
 
 import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.entity.base.AbstractEntity_;
 import com.lockermat.model.entity.lockermat.ParcelEntity;
-import com.lockermat.model.repository.BaseRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import com.lockermat.model.entity.lockermat.ParcelEntity_;
+import com.lockermat.model.entity.lockermat.ReservationEntity;
+import com.lockermat.model.entity.lockermat.ReservationEntity_;
+import com.lockermat.model.repository.base.JpaRepository2;
+import com.lockermat.model.repository.base.Specs;
+import jakarta.persistence.criteria.AbstractQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.From;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface ParcelRepository extends BaseRepository<ParcelEntity> {
+public interface ParcelRepository extends JpaRepository2<ParcelEntity> {
 
-	@Query(value = QUERY_IS_WITHIN_DISTANCE, nativeQuery = true)
-	boolean isWithinDistance(@Param("parcelId") UUID parcelId, @Param("lng") double lng, @Param("lat") double lat, @Param("meters") double meters);
+	default Optional<ParcelEntity> findAnyWithoutActiveReservations(Long lockermatId, ParcelSize size) {
+		return findAny(
+				Specs.equal(ParcelEntity_.lockermat, lockermatId),
+				Specs.equal(ParcelEntity_.size, size),
+				(cb, cq, root) -> noActiveReservation(root, cq, cb)
+		);
+	};
 
-	@Query(value = QUERY_FIND_ANY_AVAILABLE, nativeQuery = true)
-	Optional<ParcelEntity> findAnyAvailable(@Param("lockermatId") UUID lockermatId, @Param("size") String size, @Param("from") Instant reservationFrom, @Param("to") Instant reservationTo, long minWindowBetweenReservationsSeconds);
+	private static Predicate noActiveReservation(CriteriaBuilder builder, AbstractQuery<?> query, From<?, ParcelEntity> parcelFrom) {
+		Subquery<Long> subquery = query.subquery(Long.class);
+		Root<ReservationEntity> reservationRoot = subquery.from(ReservationEntity.class);
 
-	String QUERY_IS_WITHIN_DISTANCE = """
-			SELECT ST_DWithin(
-			  l.location_::geography,
-			  ST_SetSRID(ST_MakePoint(:lng, :lat), 4326)::geography,
-			  :meters
-			)
-			FROM parcel_ p
-			JOIN lockermat_ l ON p.lockermat_id_ = l.id_
-			WHERE p.id_ = :parcelId
-			""";
-
-	String QUERY_FIND_ANY_AVAILABLE = """
-			SELECT *
-			FROM parcel_ p
-			WHERE p.size_ = :size
-			and p.lockermat_id_ = :lockermatId
-			and 0 = (
-				select count(1) from reservation_ r
-				where r.parcel_id_ = p.id_
-				and r.to_ >= now()
-			)
-			LIMIT 1
-			""";
+		subquery.select(
+				reservationRoot.get(AbstractEntity_.id)
+		).where(
+				builder.equal(reservationRoot.get(ReservationEntity_.parcel).get(AbstractEntity_.id), parcelFrom.get(AbstractEntity_.id)),
+				builder.lessThanOrEqualTo(reservationRoot.get(ReservationEntity_.from), Instant.now())
+		);
+		return builder.exists(subquery);
+	}
 }
