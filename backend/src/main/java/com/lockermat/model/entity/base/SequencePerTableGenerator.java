@@ -2,10 +2,10 @@ package com.lockermat.model.entity.base;
 
 import org.hibernate.MappingException;
 import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
+import org.hibernate.generator.GeneratorCreationContext;
 import org.hibernate.id.PersistentIdentifierGenerator;
 import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.type.Type;
 
 import java.lang.reflect.Field;
 import java.util.Properties;
@@ -16,11 +16,11 @@ import java.util.Properties;
 public class SequencePerTableGenerator extends SequenceStyleGenerator {
 
     @Override
-    public void configure(Type type, Properties props, ServiceRegistry serviceRegistry) throws MappingException {
-        setGeneratorProperties(props, serviceRegistry);
+    public void configure(GeneratorCreationContext creationContext, Properties props) throws MappingException {
+        setGeneratorProperties(props, creationContext.getServiceRegistry());
         String sequenceName = props.getProperty(PersistentIdentifierGenerator.TABLE) + props.getProperty(DEF_SEQUENCE_SUFFIX);
         props.setProperty(SEQUENCE_PARAM, sequenceName);
-        super.configure(type, props, serviceRegistry);
+        super.configure(creationContext, props);
     }
 
     private void setGeneratorProperties(Properties props, ServiceRegistry serviceRegistry) {

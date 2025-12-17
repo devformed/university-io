@@ -1,10 +1,10 @@
 package com.lockermat.service;
 
-import com.lockermat.model.dto.Position;
 import com.lockermat.model.dto.lockermat.parcel.reservation.ReservationEntry;
 import com.lockermat.model.dto.lockermat.parcel.reservation.ReservationReserveRequest;
-import com.lockermat.model.entity.lockermat.ParcelEntity;
+import com.lockermat.model.entity.lockermat.LockermatCellEntity;
 import com.lockermat.model.entity.lockermat.ReservationEntity;
+import com.lockermat.model.repository.lockermat.LockermatCellRepository;
 import com.lockermat.model.repository.lockermat.ReservationRepository;
 import com.lockermat.service.mapper.ReservationMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,27 +22,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReservationService {
 
-	private final ReservationRepository reservationRepo;
-	private final ParcelService parcelService;
+	private final ReservationRepository reservationRepository;
+	private final LockermatCellRepository parcelRepository;
 
 	public Long reserve(ReservationReserveRequest request) {
-		Optional<ParcelEntity> parcel = parcelService.findAnyWithoutActiveReservations(request.lockermatId(), request.size());
+		Optional<LockermatCellEntity> parcel = parcelRepository.findAnyWithoutActiveReservations(request.lockermatId(), request.size());
 		ReservationEntity reservation = new ReservationEntity(null, parcel.orElseThrow(), request.from(), request.to());
-		return reservationRepo.save(reservation).getId();
+		return reservationRepository.save(reservation).getId();
 	}
 
 	public void cancel(Long reservationId) {
-		var entity = reservationRepo.getReferenceById(reservationId);
-		reservationRepo.delete(entity);
-	}
-
-	public void openRemotely(Position position, Long reservationId) {
-		var reservation = reservationRepo.getReferenceById(reservationId);
-		var parcelId = reservation.getParcel().getId();
-		parcelService.openRemotely(parcelId, position.latitude(), position.longitude());
+		var entity = reservationRepository.getReferenceById(reservationId);
+		reservationRepository.delete(entity);
 	}
 
 	public List<ReservationEntry> findAll() {
-		return ReservationMapper.INSTANCE.toEntries(reservationRepo.findById(List.of(1L)));
+		return ReservationMapper.INSTANCE.toEntries(reservationRepository.findAll());
 	}
 }

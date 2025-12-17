@@ -19,7 +19,7 @@ public interface ReservationMapper {
 
 	ReservationMapper INSTANCE = Mappers.getMapper(ReservationMapper.class);
 
-	@Mapping(target = "parcelId", source = "parcel.id")
+	@Mapping(target = "cellId", source = "cell.id")
 	ReservationEntry toEntry(ReservationEntity entity);
 
 	default List<ReservationEntry> toEntries(Collection<ReservationEntity> entities) {

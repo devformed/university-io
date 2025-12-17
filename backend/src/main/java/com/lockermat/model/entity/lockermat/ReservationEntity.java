@@ -22,7 +22,7 @@ import java.time.Instant;
 public class ReservationEntity extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	private ParcelEntity parcel;
+	private LockermatCellEntity cell;
 
 	@Column(nullable = false)
 	private Instant from;
@@ -31,9 +31,9 @@ public class ReservationEntity extends AbstractEntity {
 	private Instant to;
 
 	@Builder
-	public ReservationEntity(Long id, ParcelEntity parcel, Instant from, Instant to) {
+	public ReservationEntity(Long id, LockermatCellEntity cell, Instant from, Instant to) {
 		super(id);
-		this.parcel = parcel;
+		this.cell = cell;
 		this.from = from;
 		this.to = to;
 	}

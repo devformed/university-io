@@ -1,18 +1,17 @@
 package com.lockermat.model.repository.base.postgres;
 
+import com.lockermat.model.repository.base.impl.ImpliedReturnTypeResolver;
 import org.hibernate.boot.model.FunctionContributions;
 import org.hibernate.metamodel.model.domain.ReturnableType;
 import org.hibernate.query.sqm.function.AbstractSqmSelfRenderingFunctionDescriptor;
 import org.hibernate.query.sqm.function.FunctionKind;
 import org.hibernate.query.sqm.produce.function.StandardArgumentsValidators;
 import org.hibernate.query.sqm.produce.function.StandardFunctionArgumentTypeResolvers;
-import org.hibernate.query.sqm.produce.function.StandardFunctionReturnTypeResolvers;
 import org.hibernate.sql.ast.SqlAstNodeRenderingMode;
 import org.hibernate.sql.ast.SqlAstTranslator;
 import org.hibernate.sql.ast.spi.SqlAppender;
 import org.hibernate.sql.ast.tree.SqlAstNode;
 import org.hibernate.sql.ast.tree.expression.QueryLiteral;
-import org.hibernate.type.StandardBasicTypes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,7 @@ final class NativeQueryDescriptor extends AbstractSqmSelfRenderingFunctionDescri
                 PostgreSqlFunction.NATIVE_QUERY.key(),
                 FunctionKind.NORMAL,
                 StandardArgumentsValidators.min(1),
-                StandardFunctionReturnTypeResolvers.invariant(fc.getTypeConfiguration().getBasicTypeRegistry().resolve(StandardBasicTypes.OBJECT_TYPE)),
+                ImpliedReturnTypeResolver.INSTANCE,
                 StandardFunctionArgumentTypeResolvers.NULL
         );
     }
@@ -43,7 +42,7 @@ final class NativeQueryDescriptor extends AbstractSqmSelfRenderingFunctionDescri
         int lastMatchIndex = 0;
         for (MatchResult match : results) {
             sqlAppender.appendSql(query.substring(lastMatchIndex, match.start()));
-            translator.render(nameArgumentMap.get(match.group(1)), SqlAstNodeRenderingMode.DEFAULT);
+            translator.render(nameArgumentMap.get(match.group(1).toLowerCase()), SqlAstNodeRenderingMode.DEFAULT);
             lastMatchIndex = match.end();
         }
         if (lastMatchIndex < query.length()) {

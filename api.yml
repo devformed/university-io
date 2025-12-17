@@ -1,0 +1,200 @@
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost
+  description: Generated server url
+paths:
+  /lockermats/reservations/reserve:
+    put:
+      tags:
+      - reservations-controller
+      operationId: reserve
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.parcel.reservation.ReservationReserveRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
+  /lockermats/reservations/cancel:
+    put:
+      tags:
+      - reservations-controller
+      operationId: cancel
+      parameters:
+      - name: reservationId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+  /lockermats:
+    get:
+      tags:
+      - lockermats-controller
+      operationId: getAvailableLocations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.LockermatFilter"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.LockermatEntry"
+  /lockermats/reservations:
+    get:
+      tags:
+      - reservations-controller
+      operationId: findAll
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.parcel.reservation.ReservationEntry"
+  /lockermats/page:
+    get:
+      tags:
+      - lockermats-controller
+      operationId: getAvailableLocationsPage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.lockermat.model.dto.PageCom.lockermat.model.dto.lockermat.LockermatFilter"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.lockermat.model.dto.PageJava.util.ListCom.lockermat.model.dto.lockermat.LockermatEntry"
+components:
+  schemas:
+    com.lockermat.model.dto.lockermat.parcel.CellSize:
+      type: string
+      enum:
+      - S
+      - M
+      - L
+    com.lockermat.model.dto.lockermat.parcel.reservation.ReservationReserveRequest:
+      type: object
+      properties:
+        lockermatId:
+          type: integer
+          format: int64
+        size:
+          $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.parcel.CellSize"
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+    com.lockermat.model.dto.Position:
+      type: object
+      properties:
+        latitude:
+          type: number
+          maximum: 90.0
+          minimum: -90.0
+        longitude:
+          type: number
+          maximum: 180.0
+          minimum: -180.0
+      required:
+      - latitude
+      - longitude
+    com.lockermat.model.dto.lockermat.LockermatFilter:
+      type: object
+      properties:
+        fulltext:
+          type: string
+        sizes:
+          type: array
+          items:
+            $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.parcel.CellSize"
+          uniqueItems: true
+        position:
+          $ref: "#/components/schemas/com.lockermat.model.dto.Position"
+    com.lockermat.model.dto.lockermat.LockermatEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        address:
+          type: string
+        position:
+          $ref: "#/components/schemas/com.lockermat.model.dto.Position"
+        sizes:
+          type: array
+          items:
+            $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.parcel.CellSize"
+          uniqueItems: true
+    com.lockermat.model.dto.lockermat.parcel.reservation.ReservationEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        cellId:
+          type: integer
+          format: int64
+        from:
+          type: string
+          format: date-time
+        to:
+          type: string
+          format: date-time
+    com.lockermat.model.dto.PageCom.lockermat.model.dto.lockermat.LockermatFilter:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        data:
+          $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.LockermatFilter"
+      required:
+      - data
+    com.lockermat.model.dto.PageJava.util.ListCom.lockermat.model.dto.lockermat.LockermatEntry:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/com.lockermat.model.dto.lockermat.LockermatEntry"
+      required:
+      - data

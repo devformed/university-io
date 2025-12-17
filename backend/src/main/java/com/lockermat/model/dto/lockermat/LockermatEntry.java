@@ -1,7 +1,7 @@
 package com.lockermat.model.dto.lockermat;
 
 import com.lockermat.model.dto.Position;
-import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.dto.lockermat.parcel.CellSize;
 
 import java.util.Set;
 
@@ -12,6 +12,6 @@ public record LockermatEntry(
 		Long id,
 		String address,
 		Position position,
-		Set<ParcelSize> sizes
+		Set<CellSize> sizes
 ) {
 }

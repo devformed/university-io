@@ -2,4 +2,4 @@ FROM amazoncorretto:21-alpine-jdk
 RUN apk update && apk add --no-cache maven bash
 WORKDIR /opt/lockermat
 ENTRYPOINT [ "sh", "-c", \
-  "mvn -B clean package -DskipTests  && java -jar target/lockermat-backend.jar" ]
+  "mvn -B clean package -DskipTests && java -jar target/lockermat-backend.jar" ]

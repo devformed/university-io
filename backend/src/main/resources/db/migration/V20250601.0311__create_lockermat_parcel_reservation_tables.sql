@@ -1,21 +1,26 @@
+create sequence lockermat_id_seq_ start with 1 increment by 1;
 create table lockermat_
 (
-    id_       uuid primary key      not null default gen_random_uuid(),
+    id_       bigint primary key default nextval('lockermat_id_seq_'::regclass),
     address_  text                  not null,
     location_ geometry(point, 4326) not null
 );
 
-create table parcel_
+create sequence lockermat_cell_id_seq_ start with 1 increment by 1;
+create table lockermat_cell_
 (
-    id_           uuid primary key not null default gen_random_uuid(),
-    lockermat_id_ uuid             not null constraint lockermat__fk references lockermat_ (id_) on delete cascade,
-    size_         varchar(10)      not null
+    id_           bigint primary key default nextval('lockermat_cell_id_seq_'::regclass),
+    lockermat_id_ bigint      not null
+        constraint lockermat__fk references lockermat_ (id_) on delete cascade,
+    size_         varchar(10) not null
 );
 
+create sequence reservation_id_seq_ start with 1 increment by 1;
 create table reservation_
 (
-    id_        uuid primary key            not null default gen_random_uuid(),
-    parcel_id_ uuid                        not null constraint parcel__fk references parcel_ (id_) on delete cascade,
-    from_      timestamp without time zone not null,
-    to_        timestamp without time zone not null
+    id_      bigint primary key default nextval('reservation_id_seq_'::regclass),
+    cell_id_ bigint                      not null
+        constraint lockermat_cell__fk references lockermat_cell_ (id_) on delete cascade,
+    from_    timestamp without time zone not null,
+    to_      timestamp without time zone not null
 );

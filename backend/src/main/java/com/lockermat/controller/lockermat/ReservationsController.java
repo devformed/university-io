@@ -1,6 +1,5 @@
 package com.lockermat.controller.lockermat;
 
-import com.lockermat.model.dto.Position;
 import com.lockermat.model.dto.lockermat.parcel.reservation.ReservationEntry;
 import com.lockermat.model.dto.lockermat.parcel.reservation.ReservationReserveRequest;
 import com.lockermat.service.ReservationService;
@@ -19,9 +18,9 @@ import java.util.List;
  * @author Anton Gorokh
  */
 @RestController
-@RequestMapping(path = "/lockermats/parcels/reservations", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/lockermats/reservations", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class LockermatParcelReservationController {
+public class ReservationsController {
 
     private final ReservationService reservationService;
 
@@ -34,11 +33,6 @@ public class LockermatParcelReservationController {
 	public void cancel(@RequestParam Long reservationId) {
 		reservationService.cancel(reservationId);
 	}
-
-    @PutMapping(path = "/open-remotely", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void openRemotely(@RequestBody Position position, @RequestParam Long reservationId) {
-        reservationService.openRemotely(position, reservationId);
-    }
 
     @GetMapping
     public List<ReservationEntry> findAll() {

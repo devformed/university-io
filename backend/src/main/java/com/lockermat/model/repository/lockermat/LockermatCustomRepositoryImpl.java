@@ -1,9 +1,9 @@
 package com.lockermat.model.repository.lockermat;
 
-import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.dto.lockermat.parcel.CellSize;
 import com.lockermat.model.entity.base.AbstractEntity_;
-import com.lockermat.model.entity.lockermat.ParcelEntity;
-import com.lockermat.model.entity.lockermat.ParcelEntity_;
+import com.lockermat.model.entity.lockermat.LockermatCellEntity;
+import com.lockermat.model.entity.lockermat.LockermatCellEntity_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -27,19 +27,19 @@ public class LockermatCustomRepositoryImpl implements LockermatCustomRepository 
 	private final EntityManager em;
 
 	@Override
-	public Map<Long, Set<ParcelSize>> findParcelSizesByLockermatIds(Collection<Long> lockermatIds) {
+	public Map<Long, Set<CellSize>> findParcelSizesByLockermatIds(Collection<Long> lockermatIds) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Tuple> query = cb.createTupleQuery();
-		Root<ParcelEntity> parcelRoot = query.from(ParcelEntity.class);
+		Root<LockermatCellEntity> parcelRoot = query.from(LockermatCellEntity.class);
 
-		query.multiselect(
-				parcelRoot.get(ParcelEntity_.lockermat).get(AbstractEntity_.id), parcelRoot.get(ParcelEntity_.size)
+		query.select(
+				cb.tuple(parcelRoot.get(LockermatCellEntity_.lockermat).get(AbstractEntity_.id), parcelRoot.get(LockermatCellEntity_.size))
 		).where(
-				parcelRoot.get(ParcelEntity_.lockermat).get(AbstractEntity_.id).in(lockermatIds)
+				parcelRoot.get(LockermatCellEntity_.lockermat).get(AbstractEntity_.id).in(lockermatIds)
 		).distinct(true);
 
 		return em.createQuery(query)
 				.getResultStream()
-				.collect(Collectors.groupingBy(tuple -> tuple.get(0, Long.class), Collectors.mapping(tuple -> tuple.get(1, ParcelSize.class), Collectors.toSet())));
+				.collect(Collectors.groupingBy(tuple -> tuple.get(0, Long.class), Collectors.mapping(tuple -> tuple.get(1, CellSize.class), Collectors.toSet())));
 	}
 }

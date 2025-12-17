@@ -1,9 +1,9 @@
 package com.lockermat.model.repository.lockermat;
 
-import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.dto.lockermat.parcel.CellSize;
 import com.lockermat.model.entity.base.AbstractEntity_;
-import com.lockermat.model.entity.lockermat.ParcelEntity;
-import com.lockermat.model.entity.lockermat.ParcelEntity_;
+import com.lockermat.model.entity.lockermat.LockermatCellEntity;
+import com.lockermat.model.entity.lockermat.LockermatCellEntity_;
 import com.lockermat.model.entity.lockermat.ReservationEntity;
 import com.lockermat.model.entity.lockermat.ReservationEntity_;
 import com.lockermat.model.repository.base.JpaRepository2;
@@ -18,24 +18,24 @@ import jakarta.persistence.criteria.Subquery;
 import java.time.Instant;
 import java.util.Optional;
 
-public interface ParcelRepository extends JpaRepository2<ParcelEntity> {
+public interface LockermatCellRepository extends JpaRepository2<LockermatCellEntity, Long> {
 
-	default Optional<ParcelEntity> findAnyWithoutActiveReservations(Long lockermatId, ParcelSize size) {
+	default Optional<LockermatCellEntity> findAnyWithoutActiveReservations(Long lockermatId, CellSize size) {
 		return findAny(
-				Specs.equal(ParcelEntity_.lockermat, lockermatId),
-				Specs.equal(ParcelEntity_.size, size),
+				Specs.equal(LockermatCellEntity_.lockermat, lockermatId),
+				Specs.equal(LockermatCellEntity_.size, size),
 				(cb, cq, root) -> noActiveReservation(root, cq, cb)
 		);
 	};
 
-	private static Predicate noActiveReservation(CriteriaBuilder builder, AbstractQuery<?> query, From<?, ParcelEntity> parcelFrom) {
+	private static Predicate noActiveReservation(CriteriaBuilder builder, AbstractQuery<?> query, From<?, LockermatCellEntity> parcelFrom) {
 		Subquery<Long> subquery = query.subquery(Long.class);
 		Root<ReservationEntity> reservationRoot = subquery.from(ReservationEntity.class);
 
 		subquery.select(
 				reservationRoot.get(AbstractEntity_.id)
 		).where(
-				builder.equal(reservationRoot.get(ReservationEntity_.parcel).get(AbstractEntity_.id), parcelFrom.get(AbstractEntity_.id)),
+				builder.equal(reservationRoot.get(ReservationEntity_.cell).get(AbstractEntity_.id), parcelFrom.get(AbstractEntity_.id)),
 				builder.lessThanOrEqualTo(reservationRoot.get(ReservationEntity_.from), Instant.now())
 		);
 		return builder.exists(subquery);

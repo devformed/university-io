@@ -26,7 +26,7 @@ public class LockermatsController {
 		return service.getAvailableLocations(request);
 	}
 
-	@GetMapping
+	@GetMapping(path = "/page")
 	public Page<List<LockermatEntry>> getAvailableLocationsPage(@Validated @RequestBody Page<LockermatFilter> request) {
 		return service.getAvailableLocationsPage(request);
 	}

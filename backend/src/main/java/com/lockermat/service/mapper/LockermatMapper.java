@@ -1,7 +1,7 @@
 package com.lockermat.service.mapper;
 
 import com.lockermat.model.dto.lockermat.LockermatEntry;
-import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.dto.lockermat.parcel.CellSize;
 import com.lockermat.model.entity.lockermat.LockermatEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -21,9 +21,9 @@ public interface LockermatMapper {
 
 	LockermatMapper INSTANCE = Mappers.getMapper(LockermatMapper.class);
 
-	LockermatEntry toEntry(LockermatEntity entity, Set<ParcelSize> sizes);
+	LockermatEntry toEntry(LockermatEntity entity, Set<CellSize> sizes);
 
-	default List<LockermatEntry> toEntries(Collection<LockermatEntity> entities, Map<Long, Set<ParcelSize>> parcelSizesByLockermatIds) {
+	default List<LockermatEntry> toEntries(Collection<LockermatEntity> entities, Map<Long, Set<CellSize>> parcelSizesByLockermatIds) {
 		return mapList(entities, o -> toEntry(o, parcelSizesByLockermatIds.get(o.getId())));
 	}
 }

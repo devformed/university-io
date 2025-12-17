@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.function.ThrowingFunction;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import static com.lockermat.util.Utils.nn;
@@ -43,5 +44,9 @@ public final class Optionull<T> {
 
     public T get() {
         return nn(value);
+    }
+
+    public Optional<T> toOptional() {
+        return Optional.ofNullable(value);
     }
 }

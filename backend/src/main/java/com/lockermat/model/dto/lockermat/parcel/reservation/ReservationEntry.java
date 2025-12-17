@@ -4,7 +4,7 @@ import java.time.Instant;
 
 public record ReservationEntry(
     Long id,
-    Long parcelId,
+    Long cellId,
     Instant from,
     Instant to
 ) {

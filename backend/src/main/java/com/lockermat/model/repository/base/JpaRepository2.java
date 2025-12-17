@@ -1,6 +1,5 @@
 package com.lockermat.model.repository.base;
 
-import com.lockermat.model.entity.base.AbstractEntity;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
  * @author Anton Gorokh
  */
 @NoRepositoryBean
-public interface JpaRepository2<E extends AbstractEntity> extends Repository<AbstractEntity, Long>, ExtendedJpaSpecificationExecutor<E> {
+public interface JpaRepository2<E, ID> extends Repository<E, ID>, ExtendedJpaSpecificationExecutor<E> {
 
     void flush();
 
@@ -31,13 +30,13 @@ public interface JpaRepository2<E extends AbstractEntity> extends Repository<Abs
 
     // read
 
-    E getReferenceById(Long id);
+    E getReferenceById(ID id);
 
-    Optional<E> findById(Long id);
+    Optional<E> findById(ID id);
 
-    List<E> findById(Iterable<Long> ids);
+    List<E> findById(Iterable<ID> ids);
 
-    boolean existsById(Long id);
+    boolean existsById(ID id);
 
     long count();
 
@@ -47,11 +46,11 @@ public interface JpaRepository2<E extends AbstractEntity> extends Repository<Abs
 
     void delete(E entity);
 
-    void deleteById(Iterable<? extends Long> ids);
+    void deleteById(Iterable<? extends ID> ids);
 
-    void deleteById(Long id);
+    void deleteById(ID id);
 
     void deleteInBatch(Iterable<E> entities);
 
-    void deleteInBatchById(Iterable<Long> ids);
+    void deleteInBatchById(Iterable<ID> ids);
 }

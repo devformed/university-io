@@ -1,6 +1,6 @@
 package com.lockermat.model.entity.lockermat;
 
-import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.dto.lockermat.parcel.CellSize;
 import com.lockermat.model.entity.base.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,17 +20,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ParcelEntity extends AbstractEntity {
+public class LockermatCellEntity extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private LockermatEntity lockermat;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ParcelSize size;
+    private CellSize size;
 
     @Builder
-    public ParcelEntity(Long id, LockermatEntity lockermat, ParcelSize size) {
+    public LockermatCellEntity(Long id, LockermatEntity lockermat, CellSize size) {
         super(id);
         this.lockermat = lockermat;
         this.size = size;

@@ -1,12 +1,11 @@
 package com.lockermat.model.repository.base;
 
-import com.lockermat.model.entity.base.AbstractEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface ExtendedJpaSpecificationExecutor<E extends AbstractEntity> extends JpaSpecificationExecutor<E> {
+public interface ExtendedJpaSpecificationExecutor<E> extends JpaSpecificationExecutor<E> {
 
     Optional<E> findAny(Specification<E> spec);
 

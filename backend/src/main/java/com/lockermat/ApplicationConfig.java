@@ -1,5 +1,6 @@
 package com.lockermat;
 
+import com.lockermat.model.repository.base.impl.ModularJpaRepositoryFactoryBean;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.lockermat")
 @EntityScan(basePackages = "com.lockermat.model")
-@EnableJpaRepositories(basePackages = "com.lockermat.model.repository")
+@EnableJpaRepositories(basePackages = "com.lockermat.model.repository", repositoryFactoryBeanClass = ModularJpaRepositoryFactoryBean.class)
 public class ApplicationConfig {
 }

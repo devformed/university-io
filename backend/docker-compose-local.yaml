@@ -11,8 +11,9 @@ services:
       POSTGRES_DB:        lockermat
     ports:
       - "5433:5432"
-    volumes:
-      - ./.pg_local_data:/var/lib/postgresql/data
+# uncomment to persist data after container is deleted
+#    volumes:
+#      - ./.pg_local_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d lockermat"]
       interval: 3s
@@ -34,5 +35,5 @@ services:
       SPRING_DATASOURCE_PASSWORD: admin
     volumes:
       - ./:/opt/lockermat
-      # optional mount for local Maven repository availableTo achieve faster builds
+# optional mount for local Maven repository to achieve faster builds
       - ${HOME}/.m2:/root/.m2

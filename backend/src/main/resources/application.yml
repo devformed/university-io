@@ -3,6 +3,7 @@ server:
   port: '8080'
 
 spring:
+  threads.virtual.enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
     username: admin
@@ -16,7 +17,6 @@ spring:
     properties.hibernate:
       dialect: org.hibernate.dialect.PostgreSQLDialect
       query.fail_on_pagination_over_collection_fetch: 'true'
-#      show_sql: 'true'
     hibernate:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
@@ -24,3 +24,7 @@ spring:
       dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
       ddl-auto: validate
   sql.init.platform: postgres
+
+springdoc:
+  api-docs.version: openapi_3_1
+  use-fqn: true

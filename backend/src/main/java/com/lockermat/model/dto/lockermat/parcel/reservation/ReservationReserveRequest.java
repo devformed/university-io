@@ -1,6 +1,6 @@
 package com.lockermat.model.dto.lockermat.parcel.reservation;
 
-import com.lockermat.model.dto.lockermat.parcel.ParcelSize;
+import com.lockermat.model.dto.lockermat.parcel.CellSize;
 
 import java.time.Instant;
 
@@ -9,7 +9,7 @@ import java.time.Instant;
  */
 public record ReservationReserveRequest(
 		Long lockermatId,
-		ParcelSize size,
+		CellSize size,
 		Instant from,
 		Instant to
 ) {
