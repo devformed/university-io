@@ -11,23 +11,58 @@ services:
       POSTGRES_DB:        lockermat
     ports:
       - "5433:5432"
-# uncomment to persist data after container is deleted
-#    volumes:
-#      - ./.pg_local_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d lockermat"]
       interval: 3s
       timeout: 5s
       retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.4.7
+    container_name: lockermat-local-keycloak
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db:5432/lockermat
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+
+      KC_HOSTNAME: lockermat-local-keycloak
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+
+      KC_LOG_LEVEL: info
+      KC_METRICS_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+      - --import-realm
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./realm-lockermat.json:/opt/keycloak/data/import/realm-lockermat.json
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --head -fsS http://localhost:9000/health/ready | echo $?" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
   app:
     container_name: lockermat-local-backend
     build:
       context: .
       dockerfile: Dockerfile.backend
     ports:
-      - "8080:8080"
+      - "8071:8080"
     depends_on:
       db:
+        condition: service_healthy
+      keycloak:
         condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lockermat
@@ -35,5 +70,5 @@ services:
       SPRING_DATASOURCE_PASSWORD: admin
     volumes:
       - ./:/opt/lockermat
-# optional mount for local Maven repository to achieve faster builds
+#      - optional mount for local Maven repository to achieve faster builds :)
       - ${HOME}/.m2:/root/.m2

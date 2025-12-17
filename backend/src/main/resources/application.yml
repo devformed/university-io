@@ -4,6 +4,7 @@ server:
 
 spring:
   threads.virtual.enabled: true
+  security.oauth2.resourceserver.jwt.issuer-uri: http://lockermat-local-keycloak:8080/realms/lockermat
   datasource:
     driver-class-name: org.postgresql.Driver
     username: admin
@@ -28,3 +29,7 @@ spring:
 springdoc:
   api-docs.version: openapi_3_1
   use-fqn: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
