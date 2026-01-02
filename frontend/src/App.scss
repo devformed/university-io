@@ -31,3 +31,13 @@ background: radial-gradient(circle, rgba(174, 225, 238, 1) 0%, rgba(240, 248, 25
 button {
     font-family: 'Poppins', sans-serif;
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  color: #667eea;
+  font-weight: 600;
+}
