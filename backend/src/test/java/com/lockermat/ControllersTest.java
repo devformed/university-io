@@ -28,6 +28,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -61,13 +62,13 @@ class ControllersTest {
 	@Test
 	void lockermatsController_findAll() throws Exception {
 		Page<LockermatFilter> req = new Page<>(0, 10, new LockermatFilter(null, null, null));
-		mvc.perform(get("/lockermats")
+		mvc.perform(post("/lockermats")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(Json.toJson(req)))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.size()", equalTo(2)));
 
-		mvc.perform(get("/lockermats/page")
+		mvc.perform(post("/lockermats/page")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(Json.toJson(req)))
 				.andExpect(status().isOk())
