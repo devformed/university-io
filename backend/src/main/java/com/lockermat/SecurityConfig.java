@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Set;
 
@@ -32,6 +33,13 @@ public class SecurityConfig {
 						.anyRequest().authenticated()
 				)
 				.oauth2ResourceServer(resourceServer -> resourceServer.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(authConverter)))
+				.cors(cors -> cors.configurationSource(request -> {
+					var corsConfiguration = new CorsConfiguration();
+					corsConfiguration.addAllowedOrigin("*");
+					corsConfiguration.addAllowedHeader("*");
+					corsConfiguration.addAllowedMethod("*");
+					return corsConfiguration;
+				}))
 				.build();
 	}
 }

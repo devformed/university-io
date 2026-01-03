@@ -1,6 +1,7 @@
 package com.lockermat.model.dto.lockermat.parcel.reservation;
 
 import com.lockermat.model.dto.lockermat.parcel.CellSize;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 
@@ -8,9 +9,9 @@ import java.time.Instant;
  * @author Anton Gorokh
  */
 public record ReservationReserveRequest(
-		Long lockermatId,
-		CellSize size,
-		Instant from,
-		Instant to
+		@NotNull Long lockermatId,
+		@NotNull CellSize size,
+		@NotNull Instant from,
+		@NotNull Instant to
 ) {
 }

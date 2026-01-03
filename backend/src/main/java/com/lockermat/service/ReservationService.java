@@ -11,8 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Anton Gorokh
@@ -26,8 +27,10 @@ public class ReservationService {
 	private final LockermatCellRepository parcelRepository;
 
 	public Long reserve(ReservationReserveRequest request) {
-		Optional<LockermatCellEntity> parcel = parcelRepository.findAnyWithoutActiveReservations(request.lockermatId(), request.size());
-		ReservationEntity reservation = new ReservationEntity(null, parcel.orElseThrow(), request.from(), request.to());
+		LockermatCellEntity cell = parcelRepository.findAnyWithoutActiveReservations(request.lockermatId(), request.size())
+				.orElseThrow(() -> new IllegalStateException("Couldn't find available cell"));
+
+		ReservationEntity reservation = new ReservationEntity(null, cell, request.from(), request.to());
 		return reservationRepository.save(reservation).getId();
 	}
 
@@ -37,6 +40,9 @@ public class ReservationService {
 	}
 
 	public List<ReservationEntry> findAll() {
-		return ReservationMapper.INSTANCE.toEntries(reservationRepository.findAll());
+		return reservationRepository.findAll()
+				.stream()
+				.sorted(Comparator.comparing(ReservationEntity::getFrom).reversed())
+				.collect(Collectors.collectingAndThen(Collectors.toList(), ReservationMapper.INSTANCE::toEntries));
 	}
 }

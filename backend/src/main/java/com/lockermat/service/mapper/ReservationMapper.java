@@ -19,6 +19,7 @@ public interface ReservationMapper {
 
 	ReservationMapper INSTANCE = Mappers.getMapper(ReservationMapper.class);
 
+	@Mapping(target = "lockermatId", source = "cell.lockermat.id")
 	@Mapping(target = "cellId", source = "cell.id")
 	ReservationEntry toEntry(ReservationEntity entity);
 
