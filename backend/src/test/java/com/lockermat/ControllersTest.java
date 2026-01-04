@@ -9,6 +9,7 @@ import com.lockermat.model.dto.lockermat.parcel.reservation.ReservationReserveRe
 import com.lockermat.model.entity.lockermat.LockermatEntity;
 import com.lockermat.model.entity.lockermat.LockermatEntity_;
 import com.lockermat.model.repository.base.Specs;
+import com.lockermat.model.repository.lockermat.LockermatCellRepository;
 import com.lockermat.model.repository.lockermat.LockermatRepository;
 import com.lockermat.util.Json;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +46,9 @@ class ControllersTest {
 
 	@Autowired
 	private LockermatRepository lockermatRepository;
+
+	@Autowired
+	private LockermatCellRepository cellRepository;
 
 	@Test
 	void openapi() throws Exception {
@@ -82,8 +87,8 @@ class ControllersTest {
 		// reserve
 		ReservationReserveRequest req = new ReservationReserveRequest(
 				lockermat.getId(), CellSize.S,
-				Instant.parse("2023-01-03T00:00:00Z"),
-				Instant.parse("2023-01-04T00:00:00Z")
+				Instant.now(),
+				Instant.now().plusSeconds(24 * 60 * 60)
 		);
 		Long newId = Long.valueOf(mvc.perform(put("/lockermats/reservations/reserve")
 						.contentType(MediaType.APPLICATION_JSON).content(Json.toJson(req)))

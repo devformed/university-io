@@ -24,20 +24,20 @@ public interface LockermatCellRepository extends JpaRepository2<LockermatCellEnt
 		return findAny(
 				Specs.equal(LockermatCellEntity_.lockermat, lockermatId),
 				Specs.equal(LockermatCellEntity_.size, size),
-				(cb, cq, root) -> noActiveReservation(root, cq, cb)
+				(root, cq, cb) -> noActiveReservation(cb, cq, root)
 		);
 	};
 
-	private static Predicate noActiveReservation(CriteriaBuilder builder, AbstractQuery<?> query, From<?, LockermatCellEntity> parcelFrom) {
+	private static Predicate noActiveReservation(CriteriaBuilder builder, AbstractQuery<?> query, From<?, LockermatCellEntity> cellFrom) {
 		Subquery<Long> subquery = query.subquery(Long.class);
 		Root<ReservationEntity> reservationRoot = subquery.from(ReservationEntity.class);
 
 		subquery.select(
 				reservationRoot.get(AbstractEntity_.id)
 		).where(
-				builder.equal(reservationRoot.get(ReservationEntity_.cell).get(AbstractEntity_.id), parcelFrom.get(AbstractEntity_.id)),
-				builder.lessThanOrEqualTo(reservationRoot.get(ReservationEntity_.from), Instant.now())
+				builder.equal(reservationRoot.get(ReservationEntity_.cell).get(AbstractEntity_.id), cellFrom.get(AbstractEntity_.id)),
+				builder.greaterThan(reservationRoot.get(ReservationEntity_.to), builder.currentTimestamp().as(Instant.class))
 		);
-		return builder.exists(subquery);
+		return builder.not(builder.exists(subquery));
 	}
 }
