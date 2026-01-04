@@ -20,7 +20,7 @@ function* reserveLockerMatParcel(action: ReserveLockerMatParcelAction): Generato
       to: new Date(data.to).toISOString(),
     }
 
-    yield call(apiFetch, 'lockermats/parcels/reservations/reserve', 'PUT', requestBody);
+    yield call(apiFetch, 'lockermats/reservations/reserve', 'PUT', requestBody);
     console.log(`${loggerPrefix} reservation succeed. Showing popup with confirmation.`);
     yield put({ type: SHOW_POPUP, data: PopupContentType.Confirm });
   } catch (error) {

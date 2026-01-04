@@ -58,7 +58,7 @@ export interface SetSelectedLockerMatParcelAction {
 export interface ReserveLockerMatParcelAction {
   type: typeof RESERVE_LOCKERMAT_PARCEL;
   data: {
-    lockermatId: string;
+    lockermatId: number;
     size: string;
     from: string;
     to: string;
@@ -68,7 +68,7 @@ export interface ReserveLockerMatParcelAction {
 export interface OpenRemotelyLockerMatParcelAction {
   type: typeof OPEN_REMOTELY_LOCKERMAT_PARCEL;
   data: {
-    lockermatId: string;
+    lockermatId: number;
     size: string;
     from: string;
     to: string;
@@ -89,13 +89,13 @@ export interface SetAllUserReservationsAction {
 export interface CancelUserReservationAction {
   type: typeof CANCEL_USER_RESERVATION;
   data: {
-    reservationId: string;
+    reservationId: number;
   };
 }
 
 export interface DeleteUserReservationAction {
   type: typeof DELETE_USER_RESERVATION;
-  data: string; // reservationId
+  data: number; // reservationId
 }
 
 

@@ -8,7 +8,7 @@ import './styles/MyPackages.scss';
 const MyPackages = ({ reservations }: MyPackagesPropsTypes) => {
   const dispatch = useDispatch();
 
-  const handleCancel = (reservationId: string) => {
+  const handleCancel = (reservationId: number) => {
     dispatch(cancelUserReservation({ reservationId }));
   };
 
@@ -16,14 +16,14 @@ const MyPackages = ({ reservations }: MyPackagesPropsTypes) => {
     <div className="my-packages">
       <h3 className="my-packages__title">Twoje rezerwacje</h3>
       {reservations.map((res) => (
-        <div key={res.id} className="my-packages__item">
+        <div key={`${res.id}`} className="my-packages__item">
           <p>
-            <span className="my-packages__label">ID Rezerwacji:</span>
-            <span className="my-packages__value">{res.id}</span>
+            <span className="my-packages__label">Numer rezerwacji (ID):</span>
+            <span className="my-packages__value">{`${res.id}`}</span>
           </p>
           <p>
-            <span className="my-packages__label">ID Skrytki:</span>
-            <span className="my-packages__value">{res.parcelId}</span>
+            <span className="my-packages__label">Adres skrytki:</span>
+            <span className="my-packages__value">{res.lockermatAddress}</span>
           </p>
           <p>
             <span className="my-packages__label">Od:</span>

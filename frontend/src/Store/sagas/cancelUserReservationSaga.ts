@@ -16,7 +16,7 @@ function* cancelUserReservation(action: CancelUserReservationAction): Generator<
     
     yield call(
       apiFetch,
-      `lockermats/parcels/reservations/cancel?reservationId=${action.data.reservationId}`,
+      `lockermats/reservations/cancel?reservationId=${action.data.reservationId}`,
       'PUT',
       null
     );

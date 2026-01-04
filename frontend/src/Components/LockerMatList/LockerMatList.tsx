@@ -28,12 +28,13 @@ const LockerMatList = ({ lockerMatList }: LockerMatListPropsType) => {
             >
               Rezerwuj
             </button>
-            <button
+            {/* // For future implementation */}
+            {/* <button
               className="locker-mat-list__button"
               onClick={() => handleOpenPopup(PopupContentType.OpenRemotely, point)}
             >
               Otwórz zdalnie
-            </button>
+            </button> */}
           </div>
         </div>
       ))}

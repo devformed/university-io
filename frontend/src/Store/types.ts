@@ -1,5 +1,6 @@
 import { LockermatParcelSizes } from 'Enums/LockerMatParcelSizes';
 import { Views } from 'Enums/Views';
+import { SassNumber } from 'sass';
 
 export interface RootState {
   app: {
@@ -11,7 +12,7 @@ export interface RootState {
 }
 
 export interface LockerMatPoint {
-  id: string;
+  id: number;
   address: string;
   position: {
     longitude: number;
@@ -30,8 +31,10 @@ export interface InputValues {
 }
 
 export interface UserReservation {
-  id: string;
-  parcelId: string;
+  id: number;
+  cellId: number;
+  lockermatId: number;
+  lockermatAddress: string;
   from: string;
   to: string;
 }

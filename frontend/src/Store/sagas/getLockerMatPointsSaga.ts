@@ -15,22 +15,18 @@ function* getLockerMatPoints(action: GetLockerMatPointsAction): Generator<any, v
 
     const inputValues = yield select((state) => state.app.inputValues);
 
-    const requestBody = {
-      pageNumber: 0,
-      pageSize: 20,
-      data: {
-        fulltext: inputValues.fulltext || '',
-        availableFrom: inputValues.availableFrom ? new Date(inputValues.availableFrom).toISOString() : '',
-        availableTo: inputValues.availableTo ? new Date(inputValues.availableTo).toISOString() : '',
-        position: {
-          latitude: Number(inputValues.latitude),
-          longitude: Number(inputValues.longitude)
-        },
-        sizes: inputValues.sizes || []
-      }
+    // Backend expects LockermatFilter: { fulltext, sizes, position }
+    const filterRequest = {
+      fulltext: inputValues.fulltext || null,
+      sizes: inputValues.sizes && inputValues.sizes.length > 0 ? inputValues.sizes : null,
+      // position: inputValues.latitude && inputValues.longitude ? {
+      //   latitude: inputValues.latitude,
+      //   longitude: inputValues.longitude
+      // } : null
+      position: null,
     };
 
-    const { data }: { data: LockerMatPoint[] } = yield call(apiFetch, 'lockermats', 'POST', requestBody);
+    const data: LockerMatPoint[] = yield call(apiFetch, 'lockermats', 'POST', filterRequest);
     console.log(`${loggerPrefix} LockerMatPoints obtained. Saving data to store.`);
     yield put(setLockerMatPoints(data));
   } catch (error) {

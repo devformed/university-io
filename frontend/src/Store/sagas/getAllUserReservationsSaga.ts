@@ -10,7 +10,7 @@ const loggerPrefix = '[GetAllUserReservationsSaga]';
 function* getAllUserReservations(action: GetAllUserReservationsAction): Generator<any, void, any> {
   try {
     console.log(`${loggerPrefix} start. Fetching for all user reservations.`);
-    const data = yield call(apiFetch, 'lockermats/parcels/reservations', 'GET', null);
+    const data = yield call(apiFetch, 'lockermats/reservations', 'GET', null);
     console.log(`${loggerPrefix} start. User reservations obtained - saving data in store.`);
     yield put(setAllUserReservations(data));
   } catch (error) {
