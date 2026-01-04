@@ -197,6 +197,8 @@ components:
         lockermatId:
           type: integer
           format: int64
+        lockermatAddress:
+          type: string
         cellId:
           type: integer
           format: int64
