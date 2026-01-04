@@ -57,6 +57,10 @@ public final class Specs {
 		return (root, query, cb) -> cb.equal(cb.lower(root.get(attribute)), cb.literal(opt(value, String::toLowerCase)));
 	}
 
+	public static <E> Specification<E> fulltext(SingularAttribute<? super E, String> attribute, String value) {
+		return (root, query, cb) -> cb.like(cb.lower(root.get(attribute)), cb.literal(opt(value, o -> '%' + o.toLowerCase() + '%')));
+	}
+
 	public static <E, V> Specification<E> in(SingularAttribute<? super E, V> attribute, Collection<V> values) {
 		return (root, query, cb) -> root.get(attribute).in(values);
 	}

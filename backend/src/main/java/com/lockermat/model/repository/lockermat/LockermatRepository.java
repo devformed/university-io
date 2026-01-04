@@ -18,7 +18,7 @@ public interface LockermatRepository extends JpaRepository2<LockermatEntity, Lon
 	default List<LockermatEntity> findBy(LockermatFilter filter, @Nullable Pageable pageable) {
 		var specs = new ArrayList<Specification<LockermatEntity>>();
 		if (filter.fulltext() != null) {
-			specs.add(Specs.equalIgnoreCase(LockermatEntity_.address, filter.fulltext()));
+			specs.add(Specs.fulltext(LockermatEntity_.address, filter.fulltext()));
 		}
 		if (filter.position() != null) {
 			specs.add(Specs.orderBy((cb, cq, from) ->
