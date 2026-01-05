@@ -1,9 +1,32 @@
 .points {
   padding: 0 2rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+
+  &__left {
+    flex: 1;
+    min-width: 400px;
+  }
+
+  &__right {
+    flex: 1;
+    min-width: 500px;
+  }
 
   &__separator {
     margin: 2rem 0;
     height: 1px;
     background-color: #ccc;
+  }
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+
+    &__left,
+    &__right {
+      width: 100%;
+      min-width: unset;
+    }
   }
 }
