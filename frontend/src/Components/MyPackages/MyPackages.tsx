@@ -47,7 +47,7 @@ const MyPackages = ({ reservations, lockerMatPoints }: MyPackagesPropsTypes) => 
           ))}
         </div>
         <div className="my-packages__map">
-          <MapView lockerMatPoints={lockerMatPoints} reservations={reservations} />
+          <MapView lockerMatPoints={lockerMatPoints} reservations={reservations} showOnlyReservations={true} />
         </div>
       </div>
     </div>

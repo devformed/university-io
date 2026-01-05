@@ -37,8 +37,10 @@ const MapBounds = ({ points }: { points: LockerMatPoint[] }) => {
   return null;
 };
 
-const MapView = ({ lockerMatPoints, reservations }: MapViewPropsTypes) => {
+const MapView = ({ lockerMatPoints, reservations, showOnlyReservations = false }: MapViewPropsTypes) => {
   const center: [number, number] = [50.0647, 19.9450]; // Kraków
+
+  console.log('MapView render - showOnlyReservations:', showOnlyReservations);
 
   // Znajdź punkt dla danej rezerwacji
   const getPointById = (lockermatId: number) => {
@@ -63,43 +65,45 @@ const MapView = ({ lockerMatPoints, reservations }: MapViewPropsTypes) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {reservations && reservations.length > 0 ? (
-          // Tryb rezerwacji - mapuj po rezerwacjach
-          reservations.map((reservation, index) => {
-            const point = getPointById(reservation.lockermatId);
-            if (!point) return null;
+        {showOnlyReservations ? (
+          // Tryb tylko rezerwacje - pokaż markery tylko jeśli są rezerwacje
+          reservations && reservations.length > 0 ? (
+            reservations.map((reservation, index) => {
+              const point = getPointById(reservation.lockermatId);
+              if (!point) return null;
 
-            const offset = index * 0.0001;
-            
-            return (
-              <Marker
-                key={`reservation-${reservation.id}`}
-                position={[
-                  point.position.latitude + offset,
-                  point.position.longitude + offset
-                ]}
-              >
-                <Popup>
-                  <div className="popup">
-                    <div className="popup__title">{point.address}</div>
-                    <div className="popup__reservation">
-                      <div className="popup__info">
-                        <span className="popup__label">Numer rezerwacji:</span> {reservation.id}
-                      </div>
-                      <div className="popup__info">
-                        <span className="popup__label">Od:</span> {new Date(reservation.from).toLocaleString()}
-                      </div>
-                      <div className="popup__info">
-                        <span className="popup__label">Do:</span> {new Date(reservation.to).toLocaleString()}
+              const offset = index * 0.0001;
+              
+              return (
+                <Marker
+                  key={`reservation-${reservation.id}`}
+                  position={[
+                    point.position.latitude + offset,
+                    point.position.longitude + offset
+                  ]}
+                >
+                  <Popup>
+                    <div className="popup">
+                      <div className="popup__title">{point.address}</div>
+                      <div className="popup__reservation">
+                        <div className="popup__info">
+                          <span className="popup__label">Numer rezerwacji:</span> {reservation.id}
+                        </div>
+                        <div className="popup__info">
+                          <span className="popup__label">Od:</span> {new Date(reservation.from).toLocaleString()}
+                        </div>
+                        <div className="popup__info">
+                          <span className="popup__label">Do:</span> {new Date(reservation.to).toLocaleString()}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Popup>
-              </Marker>
-            );
-          })
+                  </Popup>
+                </Marker>
+              );
+            })
+          ) : null
         ) : (
-          // Tryb zwykły - mapuj po punktach
+          // Tryb zwykły - pokazuj wszystkie punkty
           lockerMatPoints.map((point: LockerMatPoint) => {
             const pointReservations = getReservationsForPoint(point.id);
             const hasReservations = pointReservations.length > 0;
