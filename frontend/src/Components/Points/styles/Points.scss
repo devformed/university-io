@@ -1,17 +1,25 @@
 .points {
   padding: 0 2rem;
   display: flex;
-  gap: 2rem;
-  align-items: flex-start;
+  flex-direction: column;
 
-  &__left {
+  &__top {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  &__search {
     flex: 1;
     min-width: 400px;
   }
 
-  &__right {
-    flex: 1;
+  &__map {
+    flex: 3;
     min-width: 500px;
+    max-height: 400px;
+    overflow: hidden;
+    margin-top: 24px;
   }
 
   &__separator {
@@ -20,11 +28,17 @@
     background-color: #ccc;
   }
 
-  @media (max-width: 1200px) {
-    flex-direction: column;
+  &__bottom {
+    width: 100%;
+  }
 
-    &__left,
-    &__right {
+  @media (max-width: 1200px) {
+    &__top {
+      flex-direction: column;
+    }
+
+    &__search,
+    &__map {
       width: 100%;
       min-width: unset;
     }

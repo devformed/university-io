@@ -37,8 +37,22 @@ const MapBounds = ({ points }: { points: LockerMatPoint[] }) => {
   return null;
 };
 
-const MapView = ({ lockerMatPoints }: MapViewPropsTypes) => {
+const MapView = ({ lockerMatPoints, reservations }: MapViewPropsTypes) => {
   const center: [number, number] = [50.0647, 19.9450]; // Kraków
+
+  console.log('MapView render - lockerMatPoints:', lockerMatPoints);
+  console.log('MapView render - reservations:', reservations);
+
+  // Znajdź punkt dla danej rezerwacji
+  const getPointById = (lockermatId: number) => {
+    return lockerMatPoints.find(p => p.id === lockermatId);
+  };
+
+  // Znajdź rezerwacje dla danego punktu
+  const getReservationsForPoint = (pointId: number) => {
+    if (!reservations) return [];
+    return reservations.filter(r => r.lockermatId === pointId);
+  };
 
   return (
     <div className="map-view">
@@ -52,29 +66,95 @@ const MapView = ({ lockerMatPoints }: MapViewPropsTypes) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {lockerMatPoints.map((point: LockerMatPoint) => (
-          <Marker
-            key={point.id}
-            position={[point.position.latitude, point.position.longitude]}
-          >
-            <Popup>
-              <div className="popup">
-                <div className="popup__title">{point.address}</div>
-                <div className="popup__info">
-                  <span className="popup__label">ID:</span> {point.id}
-                </div>
-                <div className="popup__info">
-                  <span className="popup__label">Dostępne rozmiary:</span>
-                </div>
-                <div className="popup__sizes">
-                  {point.sizes.map(size => (
-                    <span key={size} className="popup__size-badge">{size}</span>
-                  ))}
-                </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+        {reservations && reservations.length > 0 ? (
+          // Tryb rezerwacji - mapuj po rezerwacjach
+          reservations.map((reservation, index) => {
+            const point = getPointById(reservation.lockermatId);
+            if (!point) return null;
+
+            const offset = index * 0.0001;
+            
+            return (
+              <Marker
+                key={`reservation-${reservation.id}`}
+                position={[
+                  point.position.latitude + offset,
+                  point.position.longitude + offset
+                ]}
+              >
+                <Popup>
+                  <div className="popup">
+                    <div className="popup__title">{point.address}</div>
+                    <div className="popup__reservation">
+                      <div className="popup__info">
+                        <span className="popup__label">Numer rezerwacji:</span> {reservation.id}
+                      </div>
+                      <div className="popup__info">
+                        <span className="popup__label">Od:</span> {new Date(reservation.from).toLocaleString()}
+                      </div>
+                      <div className="popup__info">
+                        <span className="popup__label">Do:</span> {new Date(reservation.to).toLocaleString()}
+                      </div>
+                    </div>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })
+        ) : (
+          // Tryb zwykły - mapuj po punktach
+          lockerMatPoints.map((point: LockerMatPoint) => {
+            const pointReservations = getReservationsForPoint(point.id);
+            const hasReservations = pointReservations.length > 0;
+
+            return (
+              <Marker
+                key={point.id}
+                position={[point.position.latitude, point.position.longitude]}
+              >
+                <Popup>
+                  <div className="popup">
+                    <div className="popup__title">{point.address}</div>
+                    
+                    {hasReservations ? (
+                      // Wyświetl dane rezerwacji
+                      <>
+                        {pointReservations.map(res => (
+                          <div key={res.id} className="popup__reservation">
+                            <div className="popup__info">
+                              <span className="popup__label">Numer rezerwacji:</span> {res.id}
+                            </div>
+                            <div className="popup__info">
+                              <span className="popup__label">Od:</span> {new Date(res.from).toLocaleString()}
+                            </div>
+                            <div className="popup__info">
+                              <span className="popup__label">Do:</span> {new Date(res.to).toLocaleString()}
+                            </div>
+                          </div>
+                        ))}
+                      </>
+                    ) : (
+                      // Wyświetl dostępne rozmiary
+                      <>
+                        <div className="popup__info">
+                          <span className="popup__label">ID:</span> {point.id}
+                        </div>
+                        <div className="popup__info">
+                          <span className="popup__label">Dostępne rozmiary:</span>
+                        </div>
+                        <div className="popup__sizes">
+                          {point.sizes.map(size => (
+                            <span key={size} className="popup__size-badge">{size}</span>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })
+        )}
 
         <MapBounds points={lockerMatPoints} />
       </MapContainer>

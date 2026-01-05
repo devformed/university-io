@@ -1,5 +1,29 @@
 .my-packages {
-  padding: 20px;
+  padding: 0 2rem;
+
+  &__content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  &__list {
+    flex: 1;
+    min-width: 400px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+
+  &__map {
+    flex: 3;
+    min-width: 500px;
+    max-height: 600px;
+    overflow: hidden;
+    margin-top: 24px;
+    position: sticky;
+    top: 100px;
+  }
 
   &__title {
     font-size: 1.5rem;
@@ -38,6 +62,18 @@
 
     &:hover {
       background-color: #c82333;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    &__content {
+      flex-direction: column;
+    }
+
+    &__list,
+    &__map {
+      width: 100%;
+      min-width: unset;
     }
   }
 }

@@ -1,5 +1,6 @@
-import { LockerMatPoint } from 'Store/types';
+import { LockerMatPoint, UserReservation } from 'Store/types';
 
 export interface MapViewPropsTypes {
   lockerMatPoints: LockerMatPoint[];
+  reservations?: UserReservation[];
 }

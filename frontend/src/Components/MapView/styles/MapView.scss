@@ -4,6 +4,8 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
 
   &__container {
     width: 100%;
@@ -53,10 +55,28 @@
       font-size: 12px;
       font-weight: 500;
     }
+
+    &__reservation {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #ddd;
+
+      &:first-child {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+    }
   }
 }
 
 .leaflet-popup-close-button {
   font-size: 20px;
   padding: 4px 8px;
+}
+
+// Leaflet controls z-index fix
+.leaflet-control-zoom,
+.leaflet-control {
+  z-index: 500 !important;
 }
