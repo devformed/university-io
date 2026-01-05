@@ -23,6 +23,9 @@ values ('Kamieńskiego Office', st_geomfromtext('point(19.963635273352168 50.027
        ('Public Safety Solutions', st_geomfromtext('point(15.44267394869587 47.0104487664257)', 4326)),
        ('Elcamp', st_geomfromtext('point(19.87474782394355 50.034663402849105)', 4326));
 
+update lockermat_
+set location_ = st_setsrid(st_makepoint(st_y(location_), st_x(location_)), 4326);
+
 insert into lockermat_cell_ (lockermat_id_, size_)
 select id_, size_
 from lockermat_ l
