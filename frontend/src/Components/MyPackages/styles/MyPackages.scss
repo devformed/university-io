@@ -31,12 +31,19 @@
   }
 
   &__item {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    background: #f9f9f9;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+    }
   }
 
   &__label {
@@ -46,22 +53,25 @@
 
   &__value {
     font-weight: bold;
-    color: #0a0096;
+    color: #6366f1;
   }
 
   &__button {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-color: #dc3545;
+    background-color: #ef4444;
     color: white;
     border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 8px 16px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
-      background-color: #c82333;
+      background-color: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
     }
   }
 

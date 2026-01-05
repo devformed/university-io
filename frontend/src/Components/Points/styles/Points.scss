@@ -2,6 +2,7 @@
   padding: 0 2rem;
   display: flex;
   flex-direction: column;
+  background-color: #e0e7ff;
 
   &__top {
     display: flex;
@@ -24,8 +25,9 @@
 
   &__separator {
     margin: 2rem 0;
-    height: 1px;
-    background-color: #ccc;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #8b5cf6 50%, transparent 100%);
+    opacity: 0.3;
   }
 
   &__bottom {
