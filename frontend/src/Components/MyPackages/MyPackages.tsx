@@ -14,9 +14,6 @@ const MyPackages = ({ reservations, lockerMatPoints }: MyPackagesPropsTypes) => 
     dispatch(cancelUserReservation({ reservationId }));
   };
 
-  console.log('MyPackages - reservations:', reservations);
-  console.log('MyPackages - lockerMatPoints:', lockerMatPoints);
-
   return (
     <div className="my-packages">
       <div className="my-packages__content">

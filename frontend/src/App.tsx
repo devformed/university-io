@@ -26,6 +26,13 @@ const App = () => {
     }
   }, [auth.refreshToken]);
 
+  // Reset view to Welcome when user logs in
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      dispatch(changeView(Views.WELCOME));
+    }
+  }, [auth.isAuthenticated, dispatch]);
+
   if (auth.isLoading) {
     return (
       <div className="app">

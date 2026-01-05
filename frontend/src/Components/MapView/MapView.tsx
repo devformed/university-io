@@ -40,9 +40,6 @@ const MapBounds = ({ points }: { points: LockerMatPoint[] }) => {
 const MapView = ({ lockerMatPoints, reservations }: MapViewPropsTypes) => {
   const center: [number, number] = [50.0647, 19.9450]; // Kraków
 
-  console.log('MapView render - lockerMatPoints:', lockerMatPoints);
-  console.log('MapView render - reservations:', reservations);
-
   // Znajdź punkt dla danej rezerwacji
   const getPointById = (lockermatId: number) => {
     return lockerMatPoints.find(p => p.id === lockermatId);
